@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancVerify" prefHeight="616.0" prefWidth="1100.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.PwdVerifyController">
+<AnchorPane fx:id="ancVerify" prefHeight="616.0" prefWidth="1100.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.controller.PwdVerifyController">
    <children>
       <Label layoutX="37.0" layoutY="14.0" text="Verify Your Email" textFill="#10202f">
          <font>

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancForgetPw" prefHeight="616.0" prefWidth="1100.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.ForgotPwdComtroller">
+<AnchorPane fx:id="ancForgetPw" prefHeight="616.0" prefWidth="1100.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.controller.ForgotPwdComtroller">
    <children>
       <Label layoutX="47.0" layoutY="24.0" text="Forgot Password ?" textFill="#10202f">
          <font>

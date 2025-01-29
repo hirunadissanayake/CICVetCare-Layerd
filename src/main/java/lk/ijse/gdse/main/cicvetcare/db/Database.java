@@ -1,11 +1,8 @@
 package lk.ijse.gdse.main.cicvetcare.db;
 
 import lk.ijse.gdse.main.cicvetcare.dto.UserDto;
-import lk.ijse.gdse.main.cicvetcare.util.security.PasswordManager;
+import lk.ijse.gdse.main.cicvetcare.dao.security.PasswordManager;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Database {

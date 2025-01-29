@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="ancOrders" prefHeight="616.0" prefWidth="864.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.OrdersController">
+<AnchorPane fx:id="ancOrders" prefHeight="616.0" prefWidth="864.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.controller.OrdersController">
    <children>
       <TableView fx:id="tblOrder" layoutX="63.0" layoutY="370.0" prefHeight="151.0" prefWidth="738.0" style="-fx-background-color: #1b1464;">
          <columns>

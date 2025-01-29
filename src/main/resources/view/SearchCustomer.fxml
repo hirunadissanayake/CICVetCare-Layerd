@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ancSearchCustomer" prefHeight="300.0" prefWidth="500.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.SearchCustomerController">
+<AnchorPane fx:id="ancSearchCustomer" prefHeight="300.0" prefWidth="500.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.controller.SearchCustomerController">
    <children>
       <VBox layoutX="22.0" layoutY="8.0" prefHeight="292.0" prefWidth="480.0">
          <children>

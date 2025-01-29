@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="ancPayment" prefHeight="616.0" prefWidth="864.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.PaymentController">
+<AnchorPane fx:id="ancPayment" prefHeight="616.0" prefWidth="864.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.controller.PaymentController">
    <children>
       <Text fill="#1b1464" layoutX="65.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Id">
          <font>

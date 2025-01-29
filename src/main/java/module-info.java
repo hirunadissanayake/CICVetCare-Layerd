@@ -8,8 +8,8 @@ module lk.ijse.gdse.main.cicvetcare {
     requires java.mail;
     requires jbcrypt;
 
-    opens lk.ijse.gdse.main.cicvetcare.dto.tm to javafx.base;
-    opens lk.ijse.gdse.main.cicvetcare.contoller to javafx.fxml;
-    exports lk.ijse.gdse.main.cicvetcare;
+    opens lk.ijse.gdse.main.cicvetcare.tm to javafx.base;
     opens lk.ijse.gdse.main.cicvetcare.controller to javafx.fxml;
+    exports lk.ijse.gdse.main.cicvetcare;
+
 }

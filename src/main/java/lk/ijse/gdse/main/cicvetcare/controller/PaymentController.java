@@ -9,15 +9,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.main.cicvetcare.db.DBConnection;
 import lk.ijse.gdse.main.cicvetcare.dto.PaymentDto;
-import lk.ijse.gdse.main.cicvetcare.dto.tm.PaymentTm;
-import lk.ijse.gdse.main.cicvetcare.model.PaymentModel;
+import lk.ijse.gdse.main.cicvetcare.tm.PaymentTm;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.PaymentDAOImpl;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PaymentController implements Initializable {
 
@@ -80,7 +82,7 @@ public class PaymentController implements Initializable {
 
     }
 
-    PaymentModel paymentModel = new PaymentModel();
+    PaymentDAOImpl paymentModel = new PaymentDAOImpl();
 
     @FXML
     void btnAddOnAction(ActionEvent event) throws SQLException {
@@ -88,6 +90,26 @@ public class PaymentController implements Initializable {
         double amount = Double.parseDouble(txtAmount.getText());
         String paymentDate = txtDate.getText();
         String orderId = txtOrderId.getText();
+
+        txtAmount.setStyle(txtAmount.getStyle() + " -fx-border-color: blue;");
+        txtDate.setStyle(txtDate.getStyle() + " -fx-border-color: blue;");
+        txtOrderId.setStyle(txtOrderId.getStyle() + " -fx-border-color: blue;");
+
+        String pricePattern = "^(\\d+)||((\\d+\\.)(\\d){2})$";
+        String orderIdPattern = "^OD\\d{4}$";
+
+        boolean isValidPrice = String.format("%.2f", amount).matches(pricePattern);
+        boolean isValidOrderId = orderId.matches(orderIdPattern);
+
+
+        if (!isValidPrice){
+            txtAmount.setStyle("-fx-border-color: red;");
+            return;
+        }
+        if (!isValidOrderId){
+            txtOrderId.setStyle("-fx-border-color: red;");
+            return;
+        }
 
         PaymentDto paymentDto = new PaymentDto(paymentId, amount, paymentDate, orderId);
 
@@ -129,6 +151,26 @@ public class PaymentController implements Initializable {
         double amount = Double.parseDouble(txtAmount.getText());
         String paymentDate = txtDate.getText();
         String orderId = txtOrderId.getText();
+
+        txtAmount.setStyle(txtAmount.getStyle() + " -fx-border-color: blue;");
+        txtDate.setStyle(txtDate.getStyle() + " -fx-border-color: blue;");
+        txtOrderId.setStyle(txtOrderId.getStyle() + " -fx-border-color: blue;");
+
+        String pricePattern = "^(\\d+)||((\\d+\\.)(\\d){2})$";
+        String orderIdPattern = "^OD\\d{4}$";
+
+        boolean isValidPrice = String.format("%.2f", amount).matches(pricePattern);
+        boolean isValidOrderId = orderId.matches(orderIdPattern);
+
+
+        if (!isValidPrice){
+            txtAmount.setStyle("-fx-border-color: red;");
+            return;
+        }
+        if (!isValidOrderId){
+            txtOrderId.setStyle("-fx-border-color: red;");
+            return;
+        }
 
         PaymentDto paymentDto = new PaymentDto(paymentId, amount, paymentDate, orderId);
 
@@ -189,5 +231,29 @@ public class PaymentController implements Initializable {
     private void loadNextPaymentId() throws SQLException {
         String nextPaymentId = paymentModel.getNextPaymentId();
         lblPaymentId.setText(nextPaymentId);
+    }
+
+    public void btnPaymentReceipt(ActionEvent actionEvent) {
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    getClass()
+                            .getResourceAsStream("/Reports/Payment_Records.jrxml"
+                            ));
+
+            Connection connection = DBConnection.getInstance().getConnection();
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    jasperReport,
+                    null,
+                    connection
+            );
+
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (JRException e) {
+            new Alert(Alert.AlertType.ERROR, "Fail to generate report...!").show();
+//           e.printStackTrace();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "DB error...!").show();
+        }
     }
 }

@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="ancVehicle" prefHeight="616.0" prefWidth="864.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.VehicleController">
+<AnchorPane fx:id="ancVehicle" prefHeight="616.0" prefWidth="864.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.controller.VehicleController">
    <children>
       <Text fill="#1b1464" layoutX="47.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vehicle Id">
          <font>

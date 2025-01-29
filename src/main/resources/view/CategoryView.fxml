@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="ancCategory" prefHeight="616.0" prefWidth="864.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.CategoryController">
+<AnchorPane fx:id="ancCategory" prefHeight="616.0" prefWidth="864.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.controller.CategoryController">
    <children>
       <TableView fx:id="tblCategory" layoutX="59.0" layoutY="277.0" onMouseClicked="#tblCategoryOnAction" prefHeight="286.0" prefWidth="758.0" style="-fx-background-color: #1b1464;">
          <columns>
