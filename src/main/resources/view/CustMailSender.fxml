@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="root" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.controller.CustMailSenderController">
+   <children>
+      <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="35.0" prefWidth="464.0" text="Send Mail">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtSubject" layoutX="19.0" layoutY="76.0" prefHeight="26.0" prefWidth="464.0" promptText="Subject" style="-fx-background-color: white;" />
+      <JFXTextArea fx:id="txtBody" layoutX="18.0" layoutY="116.0" prefHeight="123.0" prefWidth="464.0" style="-fx-background-color: white;" />
+      <JFXButton fx:id="btnSend" alignment="CENTER" contentDisplay="RIGHT" layoutX="367.0" layoutY="253.0" onAction="#btnSendOnAction" prefHeight="26.0" prefWidth="107.0" style="-fx-background-color: #27ae60;" text="Send" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

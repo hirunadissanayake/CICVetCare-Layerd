@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="ancOrders" prefHeight="616.0" prefWidth="864.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.OrdersController">
+   <children>
+      <TableView fx:id="tblOrder" layoutX="63.0" layoutY="370.0" prefHeight="151.0" prefWidth="738.0" style="-fx-background-color: #1b1464;">
+         <columns>
+            <TableColumn fx:id="colOrderId" prefWidth="89.0" text="order_id" />
+            <TableColumn fx:id="colOrderDate" prefWidth="120.0" text="order_date" />
+            <TableColumn fx:id="colProductId" prefWidth="115.0" text="product_id" />
+            <TableColumn fx:id="colQty" prefWidth="102.0" text="Qty" />
+            <TableColumn fx:id="colUnitPrice" prefWidth="106.0" text="Unit price" />
+            <TableColumn fx:id="colTotal" prefWidth="114.0" text="Total" />
+            <TableColumn fx:id="colAction" prefWidth="89.0" text="Action" />
+         </columns>
+      </TableView>
+      <Text fill="#1b1464" layoutX="62.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Id">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="#1b1464" layoutX="474.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Name">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="#1b1464" layoutX="474.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Date">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="#1b1464" layoutX="61.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Id">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text layoutX="289.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Orders Manage">
+         <font>
+            <Font name="System Bold Italic" size="37.0" />
+         </font>
+      </Text>
+      <Separator layoutX="40.0" layoutY="51.0" prefHeight="13.0" prefWidth="805.0" />
+      <Button fx:id="btnAddToCart" layoutX="673.0" layoutY="308.0" mnemonicParsing="false" onAction="#btnAddToCartOnAction" style="-fx-background-color: #27ae60;" text="Add To Cart" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnPlaceOrder" layoutX="647.0" layoutY="532.0" mnemonicParsing="false" onAction="#btnPlaceOrderOnAction" style="-fx-background-color: #27ae60;" text="Place Order" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="22.0">
+               <image>
+                  <Image url="@../assests/icons8-inventory-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Text fill="#1b1464" layoutX="61.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product  Id">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Label fx:id="lblCustName" layoutX="620.0" layoutY="125.0" prefHeight="22.0" prefWidth="175.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnReset" layoutX="576.0" layoutY="308.0" mnemonicParsing="false" onAction="#btnResetOnAction" style="-fx-background-color: #1b1464;" text="Reset" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblDate" layoutX="620.0" layoutY="74.0" prefHeight="22.0" prefWidth="175.0" text="YYYY-MM-DD">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Text fill="#1b1464" layoutX="393.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product Name">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Label fx:id="lblProductName" layoutX="532.0" layoutY="179.0" prefHeight="34.0" prefWidth="263.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <JFXComboBox fx:id="cmbProductId" layoutX="181.0" layoutY="178.0" onAction="#cmbProductIdOnAction" prefHeight="26.0" prefWidth="122.0" />
+      <JFXComboBox fx:id="cmbCustId" layoutX="181.0" layoutY="130.0" onAction="#cmbCustIdOnAction" prefHeight="26.0" prefWidth="118.0" />
+      <Label fx:id="lblOrderId" layoutX="171.0" layoutY="74.0" prefHeight="18.0" prefWidth="118.0" text="1" />
+      <Text fill="#1b1464" layoutX="61.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stock Level">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Label fx:id="lblStockLevel" layoutX="183.0" layoutY="222.0" prefHeight="18.0" prefWidth="118.0" />
+      <Text fill="#1b1464" layoutX="474.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unit Price">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Label fx:id="lblPrice" layoutX="620.0" layoutY="266.0" prefHeight="18.0" prefWidth="175.0" />
+      <Text fill="#1b1464" layoutX="58.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Category Id">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Label fx:id="lblCatId" layoutX="183.0" layoutY="265.0" prefHeight="18.0" prefWidth="118.0" />
+      <Text fill="#1b1464" layoutX="474.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Qty">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtQty" layoutX="620.0" layoutY="219.0" prefHeight="26.0" prefWidth="175.0" />
+      <Button fx:id="btnReport" layoutX="428.0" layoutY="532.0" mnemonicParsing="false" onAction="#btnReportOnAction" style="-fx-background-color: #27ae60;" text="Generate Report" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="22.0">
+               <image>
+                  <Image url="@../assests/icons8-report-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

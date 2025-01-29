@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="ancShop" prefHeight="616.0" prefWidth="864.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.ShopController">
+   <children>
+      <Text fill="#1b1464" layoutX="62.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shop Id">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="#1b1464" layoutX="61.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact_Info">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtContactInfo" layoutX="182.0" layoutY="162.0" prefHeight="36.0" prefWidth="237.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </TextField>
+      <Text fill="#1b1464" layoutX="490.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtName" layoutX="564.0" layoutY="123.0" prefHeight="36.0" prefWidth="252.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </TextField>
+      <Text fill="#1b1464" layoutX="490.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtLocation" layoutX="566.0" layoutY="177.0" prefHeight="36.0" prefWidth="252.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </TextField>
+      <Text layoutX="314.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shop Manage">
+         <font>
+            <Font name="System Bold Italic" size="37.0" />
+         </font>
+      </Text>
+      <Separator layoutX="26.0" layoutY="58.0" prefHeight="13.0" prefWidth="726.0" />
+      <Button fx:id="btnAdd" layoutX="389.0" layoutY="285.0" mnemonicParsing="false" onAction="#btnAddOnAction" style="-fx-background-color: #27ae60;" text="Add Shop" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDelete" layoutX="687.0" layoutY="285.0" mnemonicParsing="false" onAction="#btnDeleteOnAtion" style="-fx-background-color: #27ae60;" text="Delete Shop" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnUpdate" layoutX="527.0" layoutY="285.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" style="-fx-background-color: #27ae60;" text="Update Shop" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Text fill="#1b1464" layoutX="62.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer_Id">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tblShop" layoutX="57.0" layoutY="362.0" onMouseClicked="#tblShopOnAction" prefHeight="199.0" prefWidth="757.0" style="-fx-background-color: #1b1464;">
+         <columns>
+            <TableColumn fx:id="colShopId" prefWidth="106.0" text="Shop_Id" />
+            <TableColumn fx:id="colName" prefWidth="164.0" text="Name" />
+            <TableColumn fx:id="colContactInfo" prefWidth="197.0" text="Contact_Info" />
+            <TableColumn fx:id="colLocation" prefWidth="146.0" text="Location" />
+            <TableColumn fx:id="colCustomerId" prefWidth="142.0" text="Customer_Id" />
+         </columns>
+      </TableView>
+      <Button fx:id="btnReset" layoutX="282.0" layoutY="285.0" mnemonicParsing="false" onAction="#btnResetOnAction" style="-fx-background-color: #1b1464;" text="Reset" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblShopId" layoutX="182.0" layoutY="112.0" prefHeight="24.0" prefWidth="237.0" text="1">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbCustId" layoutX="182.0" layoutY="217.0" onAction="#cmbBoxCustIdOnClickAction" prefHeight="26.0" prefWidth="237.0" />
+   </children>
+</AnchorPane>

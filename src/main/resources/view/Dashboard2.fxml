@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainAnc" prefHeight="616.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.DashBoard2Controller">
+   <children>
+      <AnchorPane fx:id="ancLoading" layoutX="237.0" prefHeight="616.0" prefWidth="864.0" />
+      <Pane prefHeight="616.0" prefWidth="237.0" style="-fx-background-color: #bdc3c7;">
+         <children>
+            <VBox layoutX="16.0" layoutY="10.0" prefHeight="584.0" prefWidth="204.0" spacing="3.0" style="-fx-background-color: #bdc3c7;">
+               <children>
+                  <HBox prefHeight="58.0" prefWidth="204.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="212.0" text="Dashboard">
+                           <font>
+                              <Font size="29.0" />
+                           </font>
+                        </Label>
+                     </children></HBox>
+                  <Separator prefHeight="13.0" prefWidth="178.0" />
+                  <HBox prefHeight="37.0" prefWidth="204.0" />
+                  <JFXButton fx:id="btnCustomer" onAction="#btnCustomerOnClickAction" prefHeight="41.0" prefWidth="237.0" style="-fx-background-color: #27ae60; -fx-background-radius: 14;" text="Customer" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0">
+                           <image>
+                              <Image url="@../assests/icons8-customer-30.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnEmployee" layoutX="10.0" layoutY="54.0" onAction="#btnEmployeeOnClickAction" prefHeight="41.0" prefWidth="237.0" style="-fx-background-color: #27ae60; -fx-background-radius: 14;" text="Employee" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@../assests/icons8-employees-30.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnSupplier" onAction="#btnSupplierOnClickAction" prefHeight="41.0" prefWidth="237.0" style="-fx-background-color: #27ae60; -fx-background-radius: 14;" text="Supplier" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0">
+                           <image>
+                              <Image url="@../assests/icons8-supplier-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnCategory" onAction="#btnCategoryOnClickAction" prefHeight="41.0" prefWidth="237.0" style="-fx-background-color: #27ae60; -fx-background-radius: 14;" text="Category" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0">
+                           <image>
+                              <Image url="@../assests/icons8-category-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnProduct" onAction="#btnProductOnClickAction" prefHeight="41.0" prefWidth="237.0" style="-fx-background-color: #27ae60; -fx-background-radius: 14;" text="Product" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0">
+                           <image>
+                              <Image url="@../assests/icons8-product-30.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnShop" onAction="#btnShopOnClickAction" prefHeight="41.0" prefWidth="237.0" style="-fx-background-color: #27ae60; -fx-background-radius: 14;" text="Shop" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0">
+                           <image>
+                              <Image url="@../assests/icons8-shop-30.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnOrders" onAction="#btnOrdersOnClickAction" prefHeight="41.0" prefWidth="237.0" style="-fx-background-color: #27ae60; -fx-background-radius: 14;" text="Orders" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0">
+                           <image>
+                              <Image url="@../assests/icons8-maximum-order-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnVehicle" onAction="#btnVehicleOnClickAction" prefHeight="41.0" prefWidth="237.0" style="-fx-background-color: #27ae60; -fx-background-radius: 14;" text="Vehicle" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0">
+                           <image>
+                              <Image url="@../assests/icons8-car-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnPayment" onAction="#btnPaymentOnClickAction" prefHeight="41.0" prefWidth="237.0" style="-fx-background-color: #27ae60; -fx-background-radius: 14;" text="Payment" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0">
+                           <image>
+                              <Image url="@../assests/icons8-payment-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnDelivery" onAction="#btnDeliveryOnClickAction" prefHeight="41.0" prefWidth="237.0" style="-fx-background-color: #27ae60; -fx-background-radius: 14;" text="Delivery" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0">
+                           <image>
+                              <Image url="@../assests/icons8-delivery-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnDriver" onAction="#btnDriverOnClickAction" prefHeight="44.0" prefWidth="206.0" style="-fx-background-color: #27ae60; -fx-background-radius: 14;" text="Driver" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0">
+                           <image>
+                              <Image url="@../assests/icons8-driver-48.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnInventory" onAction="#btnInventoryOnClickAction" prefHeight="44.0" prefWidth="206.0" style="-fx-background-color: #27ae60; -fx-background-radius: 14;" text="Inventory" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0">
+                           <image>
+                              <Image url="@../assests/icons8-inventory-50.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

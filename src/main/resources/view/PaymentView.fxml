@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="ancPayment" prefHeight="616.0" prefWidth="864.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.PaymentController">
+   <children>
+      <Text fill="#1b1464" layoutX="65.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Id">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="#1b1464" layoutX="65.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Date">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtDate" layoutX="192.0" layoutY="149.0" prefHeight="36.0" prefWidth="224.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </TextField>
+      <Text fill="#1b1464" layoutX="502.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtAmount" layoutX="587.0" layoutY="103.0" prefHeight="36.0" prefWidth="224.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </TextField>
+      <Text fill="#1b1464" layoutX="499.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order_Id">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtOrderId" layoutX="587.0" layoutY="149.0" prefHeight="36.0" prefWidth="224.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </TextField>
+      <Text layoutX="258.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Manage">
+         <font>
+            <Font name="System Bold Italic" size="37.0" />
+         </font>
+      </Text>
+      <Separator layoutX="9.0" layoutY="65.0" prefHeight="13.0" prefWidth="846.0" />
+      <Button fx:id="btnAdd" layoutX="325.0" layoutY="215.0" mnemonicParsing="false" onAction="#btnAddOnAction" prefHeight="36.0" prefWidth="148.0" style="-fx-background-color: #27ae60;" text="Add Payment" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDelete" layoutX="653.0" layoutY="215.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" style="-fx-background-color: #27ae60;" text="Delete Payment" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnUpdate" layoutX="481.0" layoutY="215.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" style="-fx-background-color: #27ae60;" text="Update Payment" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnPaymentReceipt" layoutX="147.0" layoutY="215.0" mnemonicParsing="false" onAction="#btnPaymentReceipt" style="-fx-background-color: #1b1464;" text="Payment Records" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tblPayment" layoutX="58.0" layoutY="302.0" onMouseClicked="#tblPaymentOnAction" prefHeight="246.0" prefWidth="753.0" style="-fx-background-color: #1b1464;">
+         <columns>
+            <TableColumn fx:id="colPaymentId" prefWidth="119.0" text="payment_id" />
+            <TableColumn fx:id="colAmount" prefWidth="219.0" text="amount" />
+            <TableColumn fx:id="colDate" prefWidth="240.0" text="payment_date" />
+            <TableColumn fx:id="colOrderId" prefWidth="173.0" text="order_id" />
+         </columns>
+      </TableView>
+      <Label fx:id="lblPaymentId" layoutX="192.0" layoutY="104.0" prefHeight="22.0" prefWidth="224.0" text="1">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnReset" layoutX="58.0" layoutY="215.0" mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="41.0" prefWidth="83.0" style="-fx-background-color: #1b1464;" text="Reset" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

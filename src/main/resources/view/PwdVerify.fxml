@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ancVerify" prefHeight="616.0" prefWidth="1100.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.PwdVerifyController">
+   <children>
+      <Label layoutX="37.0" layoutY="14.0" text="Verify Your Email" textFill="#10202f">
+         <font>
+            <Font name="System Bold" size="37.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn" layoutX="109.0" layoutY="384.0" mnemonicParsing="false" onAction="#verifyCodeOnAction" prefHeight="36.0" prefWidth="332.0" style="-fx-background-color: #27ae60;" text="Verify" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Separator layoutX="46.0" layoutY="64.0" prefHeight="13.0" prefWidth="426.0" />
+      <TextField fx:id="txtCode" layoutX="107.0" layoutY="323.0" prefHeight="36.0" prefWidth="332.0" promptText="code">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </TextField>
+      <Label fx:id="txtSelectedEmail" layoutX="107.0" layoutY="271.0" text="sample@gmail.com" textFill="#10202f">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <Hyperlink layoutX="103.0" layoutY="293.0" onAction="#changeEmailOnAction" text="change">
+         <font>
+            <Font size="15.0" />
+         </font></Hyperlink>
+      <ImageView fitHeight="570.0" fitWidth="576.0" layoutX="530.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assests/photo_2024-11-10_14-13-00.jpg" />
+         </image>
+         <effect>
+            <Blend />
+         </effect>
+      </ImageView>
+   </children>
+</AnchorPane>

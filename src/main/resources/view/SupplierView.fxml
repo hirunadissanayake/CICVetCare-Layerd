@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="ancSupplier" prefHeight="616.0" prefWidth="864.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.SupplierController">
+   <children>
+      <Text fill="#1b1464" layoutX="43.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supplier Id">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <Text fill="#1b1464" layoutX="43.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact_Info">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtContact" layoutX="161.0" layoutY="140.0" prefHeight="36.0" prefWidth="248.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <Text fill="#1b1464" layoutX="455.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtName" layoutX="529.0" layoutY="95.0" prefHeight="36.0" prefWidth="302.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <Text fill="#1b1464" layoutX="457.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtAddress" layoutX="529.0" layoutY="141.0" prefHeight="36.0" prefWidth="302.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <Text layoutX="307.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supplier Manage">
+         <font>
+            <Font name="System Bold Italic" size="37.0" />
+         </font>
+      </Text>
+      <Separator layoutX="14.0" layoutY="69.0" prefHeight="13.0" prefWidth="848.0" />
+      <Button fx:id="btnAdd" layoutX="335.0" layoutY="222.0" mnemonicParsing="false" onAction="#btnAddOnAction" style="-fx-background-color: #27ae60;" text="Add Supplier" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDelete" layoutX="673.0" layoutY="222.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" style="-fx-background-color: #27ae60;" text="Delete Supplier" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnUpdate" layoutX="491.0" layoutY="222.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" style="-fx-background-color: #27ae60;" text="Update Supplier" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblSupplierId" layoutX="161.0" layoutY="97.0" prefHeight="34.0" prefWidth="248.0" text="1">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnReset" layoutX="235.0" layoutY="222.0" mnemonicParsing="false" onAction="#btnResetOnAction" style="-fx-background-color: #1b1464;" text="Reset" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tblSupplier" layoutX="40.0" layoutY="287.0" onMouseClicked="#tblSupplierOnAction" prefHeight="283.0" prefWidth="792.0" style="-fx-background-color: #1b1464;">
+         <columns>
+            <TableColumn fx:id="colSupplierId" prefWidth="136.0" text="Supplier_Id" />
+            <TableColumn fx:id="colName" prefWidth="184.0" text="Name" />
+            <TableColumn fx:id="colContact" prefWidth="210.0" text="Contact_Info" />
+            <TableColumn fx:id="colAddress" prefWidth="261.0" text="Address" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

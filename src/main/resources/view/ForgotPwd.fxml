@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ancForgetPw" prefHeight="616.0" prefWidth="1100.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.main.cicvetcare.contoller.ForgotPwdComtroller">
+   <children>
+      <Label layoutX="47.0" layoutY="24.0" text="Forgot Password ?" textFill="#10202f">
+         <font>
+            <Font name="System Bold" size="37.0" />
+         </font>
+      </Label>
+      <Separator layoutX="56.0" layoutY="74.0" prefHeight="13.0" prefWidth="426.0" />
+      <ImageView fitHeight="570.0" fitWidth="576.0" layoutX="540.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assests/photo_2024-11-10_14-13-00.jpg" />
+         </image>
+         <effect>
+            <Blend />
+         </effect>
+      </ImageView>
+      <Button fx:id="btn" layoutX="113.0" layoutY="334.0" mnemonicParsing="false" onAction="#sendCodeOnAction" prefHeight="42.0" prefWidth="332.0" style="-fx-background-color: #0D99FF;" text="Send Verification  Code" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TextField fx:id="txtEmail" layoutX="113.0" layoutY="275.0" prefHeight="42.0" prefWidth="332.0" promptText="email here">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </TextField>
+      <Button layoutX="366.0" layoutY="218.0" mnemonicParsing="false" onAction="#backToLoginPage" prefHeight="31.0" prefWidth="79.0" style="-fx-background-color: #1A2238;" text="Login" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>
