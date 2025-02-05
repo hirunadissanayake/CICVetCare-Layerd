@@ -1,14 +1,15 @@
 package lk.ijse.gdse.main.cicvetcare.dao.custom.impl;
 
 import lk.ijse.gdse.main.cicvetcare.dao.SQLUtil;
-import lk.ijse.gdse.main.cicvetcare.dto.CustomerDto;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.CustomerDAO;
+import lk.ijse.gdse.main.cicvetcare.entity.CustomerEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CustomerDAOImpl {
-    public boolean saveCustomer(CustomerDto customerDto) throws SQLException {
+ public class CustomerDAOImpl implements CustomerDAO {
+    public boolean save(CustomerEntity customerDto) throws SQLException {
         return SQLUtil.execute("INSERT INTO Customer VALUES(?,?,?,?)",
                 customerDto.getCustId(),
                 customerDto.getCustName(),
@@ -18,7 +19,8 @@ public class CustomerDAOImpl {
 
     }
 
-    public String getNextCustomerId() throws SQLException {
+
+     public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT customer_id FROM Customer ORDER BY customer_id DESC LIMIT 1");
 
         if (rst.next()) {
@@ -41,12 +43,12 @@ public class CustomerDAOImpl {
     }
 
 
-    public ArrayList<CustomerDto> getAllCustomer() throws SQLException {
+    public ArrayList<CustomerEntity> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM Customer");
-        ArrayList<CustomerDto> customerDtos = new ArrayList<>();
+        ArrayList<CustomerEntity> customerDtos = new ArrayList<>();
 
         while (rst.next()) {
-            CustomerDto customerDto = new CustomerDto(
+            CustomerEntity customerDto = new CustomerEntity(
                     rst.getString(1),
                     rst.getString(2),
                     rst.getString(3),
@@ -57,7 +59,7 @@ public class CustomerDAOImpl {
         return customerDtos;
     }
 
-    public boolean updateCustomer(CustomerDto customerDto) throws SQLException {
+     public boolean update(CustomerEntity customerDto) throws SQLException {
         return SQLUtil.execute("UPDATE Customer SET name=?, type = ?, contact_info = ? WHERE customer_id = ?",
                 customerDto.getCustName(),
                 customerDto.getType(),
@@ -66,15 +68,16 @@ public class CustomerDAOImpl {
                 );
     }
 
-    public boolean deleteCustomer(String customerId) throws SQLException {
+    public boolean delete(String customerId) throws SQLException {
         return SQLUtil.execute("DELETE FROM Customer WHERE customer_id = ?",customerId);
     }
 
-    public CustomerDto SearchCustomerByContact(String contact) {
+
+     public CustomerEntity SearchCustomerByContact(String contact) {
         try{
             ResultSet rst = SQLUtil.execute("SELECT * FROM Customer WHERE contact_info = ?",contact);
             if (rst.next()){
-                return new CustomerDto(
+                return new CustomerEntity(
                         rst.getString(1),
                         rst.getString(2),
                         rst.getString(3),
@@ -96,10 +99,10 @@ public class CustomerDAOImpl {
         return customerIds;
     }
 
-    public CustomerDto findById(String selectedCustId) throws SQLException {
+    public CustomerEntity findById(String selectedCustId) throws SQLException {
         ResultSet resultSet = SQLUtil.execute("SELECT * FROM Customer WHERE customer_id = ?",selectedCustId);
         if (resultSet.next()) {
-            return new CustomerDto(
+            return new CustomerEntity(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -109,7 +112,8 @@ public class CustomerDAOImpl {
         return null;
     }
 
-    public ArrayList<String> getCustIds() throws SQLException {
+
+     public ArrayList<String> getCustIds() throws SQLException {
         ResultSet resultSet = SQLUtil.execute("SELECT customer_id FROM Customer");
         ArrayList<String> custIds = new ArrayList<>();
         while (resultSet.next()){

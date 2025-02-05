@@ -18,9 +18,11 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.InventoryBO;
 import lk.ijse.gdse.main.cicvetcare.dto.InventoryDto;
+import lk.ijse.gdse.main.cicvetcare.entity.InventoryEntity;
 import lk.ijse.gdse.main.cicvetcare.tm.InventoryTm;
-import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.InventoryDAOImpl;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -97,7 +99,7 @@ public class InventoryController implements Initializable {
 
     }
 
-    InventoryDAOImpl inventoryModel = new InventoryDAOImpl();
+    InventoryBO inventoryBO = (InventoryBO) BOFactory.getInstance().getBO(BOFactory.BoType.INVENTORY);;
 
     @FXML
     void btnAddOnAction(ActionEvent event) throws SQLException {
@@ -131,7 +133,7 @@ public class InventoryController implements Initializable {
 
         InventoryDto inventoryDto = new InventoryDto(inventoryId, productId, stockLevel, location);
 
-        boolean isSaved = inventoryModel.saveInventory(inventoryDto);
+        boolean isSaved = inventoryBO.save(inventoryDto);
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Inventory Added Successfully").show();
@@ -148,7 +150,7 @@ public class InventoryController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-            boolean isDeleted = inventoryModel.deleteInventory(inventoryId);
+            boolean isDeleted = inventoryBO.delete(inventoryId);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Inventory Deleted Successfully").show();
@@ -189,7 +191,7 @@ public class InventoryController implements Initializable {
 
         InventoryDto inventoryDto = new InventoryDto(inventoryId, productId, stockLevel, location);
 
-        boolean isUpdated = inventoryModel.updateInventory(inventoryDto);
+        boolean isUpdated = inventoryBO.update(inventoryDto);
         if (isUpdated) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Inventory Updated Successfully").show();
@@ -232,7 +234,7 @@ public class InventoryController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<InventoryDto> inventoryDtos = inventoryModel.getAllInventory();
+        ArrayList<InventoryDto> inventoryDtos = inventoryBO.getAll();
 
         ObservableList<InventoryTm> inventoryTms = FXCollections.observableArrayList();
 
@@ -249,13 +251,13 @@ public class InventoryController implements Initializable {
     }
 
     private void loadNextInventoryId() throws SQLException {
-        String nextId = inventoryModel.getNextInventoryId();
+        String nextId = inventoryBO.getNextId();
         lblInventoryId.setText(nextId);
     }
     private void checkLowQuantityProducts() {
         Platform.runLater(() -> {
             try {
-                List<InventoryDto> lowStockProducts = inventoryModel.getLowStockProducts();
+                List<InventoryEntity> lowStockProducts = inventoryBO.getLowStockProducts();
                 if (!lowStockProducts.isEmpty()) {
                     displayReminder(lowStockProducts);
                 }
@@ -264,7 +266,7 @@ public class InventoryController implements Initializable {
             }
         });
     }
-    private void displayReminder(List<InventoryDto> lowStockProducts) {
+    private void displayReminder(List<InventoryEntity> lowStockProducts) {
         Stage reminderStage = new Stage();
         reminderStage.initStyle(StageStyle.TRANSPARENT);
         reminderStage.setAlwaysOnTop(true);
@@ -276,7 +278,7 @@ public class InventoryController implements Initializable {
         title.setStyle("-fx-font-weight: bold; -fx-text-fill: #1e272e;");
 
         vbox.getChildren().add(title);
-        for (InventoryDto inventoryDto : lowStockProducts) {
+        for (InventoryEntity inventoryDto : lowStockProducts) {
             Label productInfo = new Label(inventoryDto.getProductId() + " - Qty: " + inventoryDto.getStock());
             vbox.getChildren().add(productInfo);
         }

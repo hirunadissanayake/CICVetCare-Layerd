@@ -1,15 +1,16 @@
 package lk.ijse.gdse.main.cicvetcare.dao.custom.impl;
 
 import lk.ijse.gdse.main.cicvetcare.dao.SQLUtil;
-import lk.ijse.gdse.main.cicvetcare.dto.PaymentDto;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.PaymentDAO;
+import lk.ijse.gdse.main.cicvetcare.entity.PaymentEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class PaymentDAOImpl {
+public class PaymentDAOImpl implements PaymentDAO {
 
-    public boolean savePayment(PaymentDto paymentDto) throws SQLException {
+    public boolean save(PaymentEntity paymentDto) throws SQLException {
         return SQLUtil.execute("INSERT INTO Payment VALUES(?, ?, ?, ?)",
                 paymentDto.getPaymentId(),
                 paymentDto.getAmount(),
@@ -18,7 +19,7 @@ public class PaymentDAOImpl {
         );
     }
 
-    public boolean updatePayment(PaymentDto paymentDto) throws SQLException {
+    public boolean update(PaymentEntity paymentDto) throws SQLException {
         return SQLUtil.execute("UPDATE Payment SET amount = ?, payment_date = ?, order_id = ? WHERE payment_id = ?",
                 paymentDto.getAmount(),
                 paymentDto.getPaymentDate(),
@@ -27,16 +28,16 @@ public class PaymentDAOImpl {
         );
     }
 
-    public boolean deletePayment(String paymentId) throws SQLException {
+    public boolean delete(String paymentId) throws SQLException {
         return SQLUtil.execute("DELETE FROM Payment WHERE payment_id = ?", paymentId);
     }
 
-    public ArrayList<PaymentDto> getAllPayments() throws SQLException {
+    public ArrayList<PaymentEntity> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM Payment");
-        ArrayList<PaymentDto> paymentDtos = new ArrayList<>();
+        ArrayList<PaymentEntity> paymentDtos = new ArrayList<>();
 
         while (rst.next()) {
-            PaymentDto paymentDto = new PaymentDto(
+            PaymentEntity paymentDto = new PaymentEntity(
                     rst.getString(1),
                     rst.getDouble(2),
                     rst.getString(3),
@@ -47,7 +48,7 @@ public class PaymentDAOImpl {
         return paymentDtos;
     }
 
-    public String getNextPaymentId() throws SQLException {
+    public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT payment_id FROM Payment ORDER BY payment_id DESC LIMIT 1");
 
         if (rst.next()) {

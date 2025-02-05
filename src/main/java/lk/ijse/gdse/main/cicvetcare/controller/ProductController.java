@@ -9,6 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.ProductBO;
+import lk.ijse.gdse.main.cicvetcare.dao.DAOFactory;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.ProductDAO;
 import lk.ijse.gdse.main.cicvetcare.dto.ProductDto;
 import lk.ijse.gdse.main.cicvetcare.tm.ProductTm;
 import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.ProductDAOImpl;
@@ -43,7 +47,7 @@ public class ProductController implements Initializable {
     @FXML
     private TextField txtProductName, txtPrice, txtCategoryId;
 
-    private ProductDAOImpl productModel = new ProductDAOImpl();
+     ProductBO productBO = (ProductBO) BOFactory.getInstance().getBO(BOFactory.BoType.PRODUCT);
 
     @FXML
     void btnAddOnAction(ActionEvent event) throws SQLException {
@@ -78,7 +82,7 @@ public class ProductController implements Initializable {
         }
 
         ProductDto productDto = new ProductDto(productId, productName, price, categoryId);
-        boolean isSaved = productModel.saveProduct(productDto);
+        boolean isSaved = productBO.save(productDto);
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Product Added Successfully").show();
@@ -94,7 +98,7 @@ public class ProductController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.YES) {
-            boolean isDeleted = productModel.deleteProduct(productId);
+            boolean isDeleted = productBO.delete(productId);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Product Deleted Successfully").show();
@@ -137,7 +141,7 @@ public class ProductController implements Initializable {
         }
 
         ProductDto productDto = new ProductDto(productId, productName, price, categoryId);
-        boolean isUpdated = productModel.updateProduct(productDto);
+        boolean isUpdated = productBO.update(productDto);
         if (isUpdated) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Product Updated Successfully").show();
@@ -175,7 +179,7 @@ public class ProductController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<ProductDto> products = productModel.getAllProducts();
+        ArrayList<ProductDto> products = productBO.getAll();
         ObservableList<ProductTm> productTms = FXCollections.observableArrayList();
 
         for (ProductDto dto : products) {
@@ -185,7 +189,7 @@ public class ProductController implements Initializable {
     }
 
     private void loadNextProductId() throws SQLException {
-        String nextProductId = productModel.getNextProductId();
+        String nextProductId = productBO.getNextId();
         lblProductId.setText(nextProductId);
     }
     @Override

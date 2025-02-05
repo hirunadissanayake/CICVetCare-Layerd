@@ -9,6 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.DeliveryBO;
+import lk.ijse.gdse.main.cicvetcare.dao.DAOFactory;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.DeliveryDAO;
 import lk.ijse.gdse.main.cicvetcare.dto.DeliveryDto;
 import lk.ijse.gdse.main.cicvetcare.tm.DeliveryTm;
 import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.DeliveryDAOImpl;
@@ -82,7 +86,7 @@ public class DeliveryController implements Initializable {
     @FXML
     private TextField txtShopId;
 
-    private DeliveryDAOImpl deliveryModel = new DeliveryDAOImpl();
+     DeliveryBO deliveryBO = (DeliveryBO) BOFactory.getInstance().getBO(BOFactory.BoType.DELIVERY);
 
     @FXML
     void btnAddOnAction(ActionEvent event) throws SQLException {
@@ -96,7 +100,7 @@ public class DeliveryController implements Initializable {
 
         DeliveryDto deliveryDto = new DeliveryDto(deliveryId, deliveryDate, deliveryStatus, orderId, vehicleId, driverId, shopId);
 
-        boolean isSaved = deliveryModel.saveDelivery(deliveryDto);
+        boolean isSaved = deliveryBO.save(deliveryDto);
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Delivery Added Successfully").show();
@@ -113,7 +117,7 @@ public class DeliveryController implements Initializable {
         Optional<ButtonType> option = alert.showAndWait();
 
         if (option.isPresent() && option.get() == ButtonType.YES) {
-            boolean isDeleted = deliveryModel.deleteDelivery(deliveryId);
+            boolean isDeleted = deliveryBO.delete(deliveryId);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Delivery Deleted Successfully").show();
@@ -140,7 +144,7 @@ public class DeliveryController implements Initializable {
 
         DeliveryDto deliveryDto = new DeliveryDto(deliveryId, deliveryDate, deliveryStatus, orderId, vehicleId, driverId, shopId);
 
-        boolean isUpdated = deliveryModel.updateDelivery(deliveryDto);
+        boolean isUpdated = deliveryBO.update(deliveryDto);
         if (isUpdated) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Delivery Updated Successfully").show();
@@ -184,7 +188,7 @@ public class DeliveryController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<DeliveryDto> deliveries = deliveryModel.getAllDeliveries();
+        ArrayList<DeliveryDto> deliveries = deliveryBO.getAll();
         ObservableList<DeliveryTm> deliveryTms = FXCollections.observableArrayList();
 
         for (DeliveryDto delivery : deliveries) {
@@ -203,7 +207,7 @@ public class DeliveryController implements Initializable {
     }
 
     private void loadNextDeliveryId() throws SQLException {
-        String nextId = deliveryModel.getNextDeliveryId();
+        String nextId = deliveryBO.getNextId();
         lblDeliveryId.setText(nextId);
     }
 

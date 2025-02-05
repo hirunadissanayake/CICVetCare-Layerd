@@ -9,6 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.PaymentBO;
+import lk.ijse.gdse.main.cicvetcare.dao.DAOFactory;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.PaymentDAO;
 import lk.ijse.gdse.main.cicvetcare.db.DBConnection;
 import lk.ijse.gdse.main.cicvetcare.dto.PaymentDto;
 import lk.ijse.gdse.main.cicvetcare.tm.PaymentTm;
@@ -82,7 +86,7 @@ public class PaymentController implements Initializable {
 
     }
 
-    PaymentDAOImpl paymentModel = new PaymentDAOImpl();
+    PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BoType.PAYMENT);
 
     @FXML
     void btnAddOnAction(ActionEvent event) throws SQLException {
@@ -113,7 +117,7 @@ public class PaymentController implements Initializable {
 
         PaymentDto paymentDto = new PaymentDto(paymentId, amount, paymentDate, orderId);
 
-        boolean isSaved = paymentModel.savePayment(paymentDto);
+        boolean isSaved = paymentBO.save(paymentDto);
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Payment Added Successfully").show();
@@ -130,7 +134,7 @@ public class PaymentController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-            boolean isDeleted = paymentModel.deletePayment(paymentId);
+            boolean isDeleted = paymentBO.delete(paymentId);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Payment Deleted Successfully").show();
@@ -174,7 +178,7 @@ public class PaymentController implements Initializable {
 
         PaymentDto paymentDto = new PaymentDto(paymentId, amount, paymentDate, orderId);
 
-        boolean isUpdated = paymentModel.updatePayment(paymentDto);
+        boolean isUpdated = paymentBO.update(paymentDto);
         if (isUpdated) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Payment Updated Successfully").show();
@@ -212,7 +216,7 @@ public class PaymentController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<PaymentDto> paymentDtos = paymentModel.getAllPayments();
+        ArrayList<PaymentDto> paymentDtos = paymentBO.getAll();
 
         ObservableList<PaymentTm> paymentTms = FXCollections.observableArrayList();
 
@@ -229,7 +233,7 @@ public class PaymentController implements Initializable {
     }
 
     private void loadNextPaymentId() throws SQLException {
-        String nextPaymentId = paymentModel.getNextPaymentId();
+        String nextPaymentId = paymentBO.getNextId();
         lblPaymentId.setText(nextPaymentId);
     }
 

@@ -1,14 +1,15 @@
 package lk.ijse.gdse.main.cicvetcare.dao.custom.impl;
 
 import lk.ijse.gdse.main.cicvetcare.dao.SQLUtil;
-import lk.ijse.gdse.main.cicvetcare.dto.DriverDto;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.DriverDAO;
+import lk.ijse.gdse.main.cicvetcare.entity.DriverEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DriverDAOImpl {
-    public boolean saveDriver(DriverDto driverDto) throws SQLException {
+public class DriverDAOImpl implements DriverDAO {
+    public boolean save(DriverEntity driverDto) throws SQLException {
         return SQLUtil.execute("INSERT INTO Driver VALUES(?,?,?,?)",
                 driverDto.getDriverId(),
                 driverDto.getDriverName(),
@@ -17,7 +18,7 @@ public class DriverDAOImpl {
         );
     }
 
-    public boolean updateDriver(DriverDto driverDto) throws SQLException {
+    public boolean update(DriverEntity driverDto) throws SQLException {
         return SQLUtil.execute("UPDATE Driver SET name=?, license = ?, contact_info = ? WHERE driver_id = ?",
                 driverDto.getDriverName(),
                 driverDto.getLicense(),
@@ -26,16 +27,16 @@ public class DriverDAOImpl {
         );
     }
 
-    public boolean deleteDriver(String driverId) throws SQLException {
+    public boolean delete(String driverId) throws SQLException {
         return SQLUtil.execute("DELETE FROM Driver WHERE driver_id = ?",driverId);
     }
 
-    public ArrayList<DriverDto> getAllDrivers() throws SQLException {
+    public ArrayList<DriverEntity> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM Driver");
-        ArrayList<DriverDto> driverDtos = new ArrayList<>();
+        ArrayList<DriverEntity> driverDtos = new ArrayList<>();
 
         while (rst.next()) {
-            DriverDto driverDto = new DriverDto(
+            DriverEntity driverDto = new DriverEntity(
                     rst.getString(1),
                     rst.getString(2),
                     rst.getString(3),
@@ -47,7 +48,7 @@ public class DriverDAOImpl {
 
     }
 
-    public String getNextDriverId() throws SQLException {
+    public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT driver_id FROM Driver ORDER BY driver_id DESC LIMIT 1");
 
         if (rst.next()) {

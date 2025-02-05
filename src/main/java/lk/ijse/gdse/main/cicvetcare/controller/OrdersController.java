@@ -10,8 +10,19 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Pair;
+import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.CustomerBO;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.OrdersBO;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.ProductBO;
+import lk.ijse.gdse.main.cicvetcare.dao.DAOFactory;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.CustomerDAO;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.OrdersDAO;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.ProductDAO;
 import lk.ijse.gdse.main.cicvetcare.db.DBConnection;
 import lk.ijse.gdse.main.cicvetcare.dto.*;
+import lk.ijse.gdse.main.cicvetcare.entity.CustomerEntity;
+import lk.ijse.gdse.main.cicvetcare.entity.InventoryEntity;
+import lk.ijse.gdse.main.cicvetcare.entity.ProductEntity;
 import lk.ijse.gdse.main.cicvetcare.tm.OrderTm;
 import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.OrdersDAOImpl;
@@ -109,8 +120,10 @@ public class OrdersController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Please Select Product Id", ButtonType.OK).show();
             return;
         }
-
         String cartQtyString = txtQty.getText();
+        double unitPrice = Double.parseDouble(lblPrice.getText());
+        //OrderItemDto orderItemDto = new OrderItemDto(orderId, selectedProductId, Integer.parseInt(cartQtyString), unitPrice);
+
         String qtyPattern = "^[0-9]+$";
 
         if (!cartQtyString.matches(qtyPattern)) {
@@ -128,7 +141,7 @@ public class OrdersController implements Initializable {
             return;
         }
         txtQty.setText("");
-        double unitPrice = Double.parseDouble(lblPrice.getText());
+
         double total = unitPrice * cartQty;
         for (OrderTm orderTm : orderTms) {
             if (orderTm.getProduct_id().equals(selectedProductId)) {
@@ -169,9 +182,10 @@ public class OrdersController implements Initializable {
             return;
         }
         String orderId = lblOrderId.getText();
+        System.out.println("aaa: " + orderId);
         LocalDate date = LocalDate.parse(lblDate.getText());
         String customerId = cmbCustId.getValue();
-
+        String selectedProductId = cmbProductId.getValue();
         ArrayList<OrderItemDto> orderItems = new ArrayList<>();
         for (OrderTm orderTm : orderTms) {
             OrderItemDto orderItemDto = new OrderItemDto(
@@ -192,7 +206,13 @@ public class OrdersController implements Initializable {
                 employeeId,
                 orderItems
         );
-        boolean isSaved = ordersModel.saveOrder(orderDto);
+        String cartQtyString = txtQty.getText();
+        int cart = Integer.parseInt(cartQtyString);
+        double unitPrice = Double.parseDouble(lblPrice.getText());
+        OrderItemDto orderItemDto = new OrderItemDto(orderId, selectedProductId, cart, unitPrice);
+
+        System.out.println("test2"+orderDto.getOrderId());
+        boolean isSaved = ordersBO.save(orderDto,orderItemDto);
         if (isSaved) {
             new Alert(Alert.AlertType.INFORMATION, "Order Placed", ButtonType.OK).show();
             refreshPage();
@@ -221,7 +241,7 @@ public class OrdersController implements Initializable {
             JasperViewer.viewReport(jasperPrint, false);
         } catch (JRException e) {
             new Alert(Alert.AlertType.ERROR, "Fail to generate report...!").show();
-//           e.printStackTrace();
+//          e.printStackTrace();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "DB error...!").show();
         }
@@ -252,9 +272,10 @@ public class OrdersController implements Initializable {
         }
     }
 
-    OrdersDAOImpl ordersModel = new OrdersDAOImpl();
+    OrdersBO ordersBO = (OrdersBO) BOFactory.getInstance().getBO(BOFactory.BoType.ORDERS);
+
     private void refreshPage() throws SQLException {
-        lblOrderId.setText(ordersModel.getNextOrderId());
+        lblOrderId.setText(ordersBO.getNextId());
         lblDate.setText(LocalDate.now().toString());
         loadCustomerId();
         loadProductId();
@@ -271,18 +292,19 @@ public class OrdersController implements Initializable {
         tblOrder.refresh();
     }
 
-    ProductDAOImpl productModel = new ProductDAOImpl();
+    ProductBO productBO = (ProductBO) BOFactory.getInstance().getBO(BOFactory.BoType.PRODUCT);
+
     private void loadProductId() throws SQLException {
-        ArrayList<String> productIds = productModel.getAllProductIds();
+        ArrayList<String> productIds = productBO.getAllProductIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(productIds);
         cmbProductId.setItems(observableList);
 
     }
 
-    CustomerDAOImpl customerModel = new CustomerDAOImpl();
+    CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BoType.CUSTOMER);
     private void loadCustomerId() throws SQLException {
-        ArrayList<String> customerIds = customerModel.getCustIds();
+        ArrayList<String> customerIds = customerBO.getCustIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(customerIds);
         cmbCustId.setItems(observableList);
@@ -291,7 +313,7 @@ public class OrdersController implements Initializable {
 
     public void cmbCustIdOnAction(ActionEvent actionEvent) throws SQLException {
         String selectedCustId = cmbCustId.getSelectionModel().getSelectedItem();
-        CustomerDto customerDto = customerModel.findById(selectedCustId);
+        CustomerEntity customerDto = customerBO.findById(selectedCustId);
         if (customerDto != null) {
             lblCustName.setText(customerDto.getCustName());
         }
@@ -302,7 +324,7 @@ public class OrdersController implements Initializable {
 
     public void cmbProductIdOnAction(ActionEvent actionEvent) throws SQLException {
         String selectedProId = cmbProductId.getSelectionModel().getSelectedItem();
-        Pair<ProductDto, InventoryDto> result = productModel.findById(selectedProId);
+        Pair<ProductDto, InventoryDto> result = productBO.findById(selectedProId);
 
         if (result != null) {
             ProductDto productDto = result.getKey();

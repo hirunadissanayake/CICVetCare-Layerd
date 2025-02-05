@@ -1,14 +1,15 @@
 package lk.ijse.gdse.main.cicvetcare.dao.custom.impl;
 
 import lk.ijse.gdse.main.cicvetcare.dao.SQLUtil;
-import lk.ijse.gdse.main.cicvetcare.dto.VehicleDto;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.VehicleDAO;
+import lk.ijse.gdse.main.cicvetcare.entity.VehicleEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class VehicleDAOImpl {
-    public boolean saveVehicle(VehicleDto vehicleDto) throws SQLException {
+public class VehicleDAOImpl implements VehicleDAO {
+    public boolean save(VehicleEntity vehicleDto) throws SQLException {
         return SQLUtil.execute("INSERT INTO Vehicle VALUES(?, ?, ?, ?)",
                 vehicleDto.getVehicleId(),
                 vehicleDto.getVehicleType(),
@@ -16,16 +17,16 @@ public class VehicleDAOImpl {
                 vehicleDto.getDriverId());
     }
 
-    public boolean deleteVehicle(String vehicleId) throws SQLException {
+    public boolean delete(String vehicleId) throws SQLException {
         return SQLUtil.execute("DELETE FROM Vehicle WHERE vehicle_id = ?", vehicleId);
     }
 
-    public ArrayList<VehicleDto> getAllVehicles() throws SQLException {
+    public ArrayList<VehicleEntity> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM Vehicle");
-        ArrayList<VehicleDto> vehicleDtos = new ArrayList<>();
+        ArrayList<VehicleEntity> vehicleDtos = new ArrayList<>();
 
         while (rst.next()) {
-            VehicleDto vehicleDto = new VehicleDto(
+            VehicleEntity vehicleDto = new VehicleEntity(
                     rst.getString("vehicle_id"),
                     rst.getString("vehicle_type"),
                     rst.getString("license_plate"),
@@ -36,7 +37,7 @@ public class VehicleDAOImpl {
         return vehicleDtos;
     }
 
-    public boolean updateVehicle(VehicleDto vehicleDto) throws SQLException {
+    public boolean update(VehicleEntity vehicleDto) throws SQLException {
         return SQLUtil.execute("UPDATE Vehicle SET vehicle_type = ?, license_plate = ?, driver_id = ? WHERE vehicle_id = ?",
                 vehicleDto.getVehicleType(),
                 vehicleDto.getLicensePlate(),
@@ -44,7 +45,7 @@ public class VehicleDAOImpl {
                 vehicleDto.getVehicleId());
     }
 
-    public String getNextVehicleId() throws SQLException {
+    public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT vehicle_id FROM Vehicle ORDER BY vehicle_id DESC LIMIT 1");
 
         if (rst.next()) {

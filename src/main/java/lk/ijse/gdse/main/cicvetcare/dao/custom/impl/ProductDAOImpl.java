@@ -2,36 +2,37 @@ package lk.ijse.gdse.main.cicvetcare.dao.custom.impl;
 
 import javafx.util.Pair;
 import lk.ijse.gdse.main.cicvetcare.dao.SQLUtil;
-import lk.ijse.gdse.main.cicvetcare.dto.InventoryDto;
-import lk.ijse.gdse.main.cicvetcare.dto.ProductDto;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.ProductDAO;
+import lk.ijse.gdse.main.cicvetcare.entity.InventoryEntity;
+import lk.ijse.gdse.main.cicvetcare.entity.ProductEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ProductDAOImpl {
+public class ProductDAOImpl implements ProductDAO {
 
 
-    public boolean saveProduct(ProductDto product) throws SQLException {
+    public boolean save(ProductEntity product) throws SQLException {
         return SQLUtil.execute("INSERT INTO Product VALUES (?, ?, ?, ?)",
                 product.getProductId(), product.getProductName(), product.getPrice(), product.getCatId());
     }
 
-    public boolean updateProduct(ProductDto product) throws SQLException {
+    public boolean update(ProductEntity product) throws SQLException {
         return SQLUtil.execute("UPDATE Product SET name=?, price=?, category_id=? WHERE product_id=?",
                 product.getProductName(), product.getPrice(), product.getCatId(), product.getProductId());
     }
 
-    public boolean deleteProduct(String productId) throws SQLException {
+    public boolean delete(String productId) throws SQLException {
         return SQLUtil.execute("DELETE FROM Product WHERE product_id=?", productId);
     }
 
-    public ArrayList<ProductDto> getAllProducts() throws SQLException {
+    public ArrayList<ProductEntity> getAll() throws SQLException {
         ResultSet result = SQLUtil.execute("SELECT * FROM Product");
-        ArrayList<ProductDto> products = new ArrayList<>();
+        ArrayList<ProductEntity> products = new ArrayList<>();
 
         while (result.next()) {
-            products.add(new ProductDto(result.getString("product_id"),
+            products.add(new ProductEntity(result.getString("product_id"),
                     result.getString("name"),
                     result.getDouble("price"),
                     result.getString("category_id")));
@@ -39,7 +40,7 @@ public class ProductDAOImpl {
         return products;
     }
 
-    public String getNextProductId() throws SQLException {
+    public String getNextId() throws SQLException {
         ResultSet result = SQLUtil.execute("SELECT product_id FROM Product ORDER BY product_id DESC LIMIT 1");
 
         if (result.next()) {
@@ -61,7 +62,7 @@ public class ProductDAOImpl {
         return productIds;
     }
 
-    public Pair<ProductDto, InventoryDto> findById(String selectedProId) throws SQLException {
+    public Pair<ProductEntity, InventoryEntity> findById(String selectedProId) throws SQLException {
         ResultSet resultSet = SQLUtil.execute(
                 "SELECT p.product_id, p.name, p.price, p.category_id, " +
                         "i.inventory_id, i.stock_level, i.location " +
@@ -71,13 +72,13 @@ public class ProductDAOImpl {
                 selectedProId
         );
         if (resultSet.next()) {
-            ProductDto productDto = new ProductDto(
+            ProductEntity productDto = new ProductEntity(
                     resultSet.getString("product_id"),
                     resultSet.getString("name"),
                     resultSet.getDouble("price"),
                     resultSet.getString("category_id")
             );
-            InventoryDto inventoryDto = new InventoryDto(
+            InventoryEntity inventoryDto = new InventoryEntity(
                     resultSet.getString("inventory_id"),
                     resultSet.getString("product_id"),
                     resultSet.getInt("stock_level"),

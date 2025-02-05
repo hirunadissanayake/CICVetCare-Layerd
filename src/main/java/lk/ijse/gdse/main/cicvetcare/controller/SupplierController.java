@@ -9,6 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.SupplierBO;
+import lk.ijse.gdse.main.cicvetcare.dao.DAOFactory;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.SupplierDAO;
 import lk.ijse.gdse.main.cicvetcare.dto.SupplierDto;
 import lk.ijse.gdse.main.cicvetcare.tm.SupplierTm;
 import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.SupplierDAOImpl;
@@ -71,7 +75,7 @@ public class SupplierController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
-            boolean isDeleted = supplierModel.deleteSupplier(supplierId);
+            boolean isDeleted = supplierBO.delete(supplierId);
             if (isDeleted){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Supplier Deleted Successfully").show();
@@ -123,7 +127,7 @@ public class SupplierController implements Initializable {
         if (isValidName && isValidContactInfo && isValidAddress){
             SupplierDto supplierDto = new SupplierDto(supId, supName, supContact, supAddress);
 
-            boolean isUpdated  = supplierModel.updateSupplier(supplierDto);
+            boolean isUpdated  = supplierBO.update(supplierDto);
             if (isUpdated){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Supplier Updated Successfully").show();
@@ -149,7 +153,7 @@ public class SupplierController implements Initializable {
         }
     }
 
-    SupplierDAOImpl supplierModel = new SupplierDAOImpl();
+    SupplierBO supplierBO = (SupplierBO) BOFactory.getInstance().getBO(BOFactory.BoType.SUPPLIER);
     @FXML
     void btnAddOnAction(ActionEvent event) throws SQLException {
         String supId = lblSupplierId.getText();
@@ -185,7 +189,7 @@ public class SupplierController implements Initializable {
         if (isValidName && isValidContactInfo && isValidAddress){
             SupplierDto supplierDto = new SupplierDto(supId, supName, supContact, supAddress);
 
-            boolean isSaved  = supplierModel.saveSupplier(supplierDto);
+            boolean isSaved  = supplierBO.save(supplierDto);
             if (isSaved){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Supplier Added Successfully").show();
@@ -209,7 +213,7 @@ public class SupplierController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<SupplierDto> supplierDtos = supplierModel.getAllSuppliers();
+        ArrayList<SupplierDto> supplierDtos = supplierBO.getAll();
 
         ObservableList<SupplierTm> supplierTms = FXCollections.observableArrayList();
 
@@ -226,7 +230,7 @@ public class SupplierController implements Initializable {
     }
 
     private void loadNextSupplierId() throws SQLException {
-        String nextCusId = supplierModel.getNextSupplierId();
+        String nextCusId = supplierBO.getNextId();
         lblSupplierId.setText(nextCusId);
     }
 

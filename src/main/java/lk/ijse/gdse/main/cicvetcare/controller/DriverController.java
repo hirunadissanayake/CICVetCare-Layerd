@@ -9,6 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.DriverBO;
+import lk.ijse.gdse.main.cicvetcare.dao.DAOFactory;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.DriverDAO;
 import lk.ijse.gdse.main.cicvetcare.dto.DriverDto;
 import lk.ijse.gdse.main.cicvetcare.tm.DriverTm;
 import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.DriverDAOImpl;
@@ -80,7 +84,7 @@ public class DriverController implements Initializable {
     private TextField txtName;
 
     @FXML
-    private DriverDAOImpl driverModel = new DriverDAOImpl();
+    DriverBO driverBO = (DriverBO) BOFactory.getInstance().getBO(BOFactory.BoType.DRIVER);
     @FXML
     void btnAddOnAction(ActionEvent event) throws SQLException {
         String driverId = lblDriverId.getText();
@@ -116,7 +120,7 @@ public class DriverController implements Initializable {
         if (isValidName && isValidContactInfo && isValidLicense){
             DriverDto driverDto = new DriverDto(driverId, driverName, license, contact);
 
-            boolean isSaved  = driverModel.saveDriver(driverDto);
+            boolean isSaved  = driverBO.save(driverDto);
             if (isSaved){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Driver Added Successfully").show();
@@ -142,7 +146,7 @@ public class DriverController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<DriverDto> driverDtos = driverModel.getAllDrivers();
+        ArrayList<DriverDto> driverDtos = driverBO.getAll();
 
         ObservableList<DriverTm> driverTms = FXCollections.observableArrayList();
 
@@ -159,7 +163,7 @@ public class DriverController implements Initializable {
     }
 
     private void loadNextDriverId() throws SQLException {
-        String nextCusId = driverModel.getNextDriverId();
+        String nextCusId = driverBO.getNextId();
         lblDriverId.setText(nextCusId);
 
     }
@@ -172,7 +176,7 @@ public class DriverController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
-            boolean isDeleted = driverModel.deleteDriver(driverId);
+            boolean isDeleted = driverBO.delete(driverId);
             if (isDeleted){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Driver Deleted Successfully").show();
@@ -224,7 +228,7 @@ public class DriverController implements Initializable {
         if (isValidName && isValidContactInfo && isValidLicense){
             DriverDto driverDto = new DriverDto(driverId, driverName, license, contact);
 
-            boolean isUpdated  = driverModel.updateDriver(driverDto);
+            boolean isUpdated  = driverBO.update(driverDto);
             if (isUpdated){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Driver Updated Successfully").show();

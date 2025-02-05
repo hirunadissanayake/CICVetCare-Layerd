@@ -10,6 +10,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.EmployeeBO;
+import lk.ijse.gdse.main.cicvetcare.dao.DAOFactory;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.EmployeeDAO;
 import lk.ijse.gdse.main.cicvetcare.dto.EmployeeDto;
 import lk.ijse.gdse.main.cicvetcare.tm.EmployeeTm;
 import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.EmployeeDAOImpl;
@@ -70,7 +74,7 @@ public class EmployeeController implements Initializable {
     private Button btnReset;
 
     @FXML
-    private EmployeeDAOImpl employeeModel = new EmployeeDAOImpl();
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getInstance().getBO(BOFactory.BoType.EMPLOYEE);
     @FXML
     void btnAddEmployeeOnAction(ActionEvent event) throws SQLException {
         String employeeId = lblEmployeeId.getText();
@@ -102,7 +106,7 @@ public class EmployeeController implements Initializable {
 
         EmployeeDto employeeDto = new EmployeeDto(employeeId, employeeName, position, contact);
 
-        boolean isSaved = employeeModel.saveEmployee(employeeDto);
+        boolean isSaved = employeeBO.save(employeeDto);
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Employee Added Successfully").show();
@@ -121,7 +125,7 @@ public class EmployeeController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.YES) {
-            boolean isDeleted = employeeModel.deleteEmployee(employeeId);
+            boolean isDeleted = employeeBO.delete(employeeId);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Employee Deleted Successfully").show();
@@ -163,7 +167,7 @@ public class EmployeeController implements Initializable {
 
         EmployeeDto employeeDto = new EmployeeDto(employeeId, employeeName, position, contact);
 
-        boolean isUpadated = employeeModel.updateEmployee(employeeDto);
+        boolean isUpadated = employeeBO.update(employeeDto);
         if (isUpadated) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Employee Updated Successfully").show();
@@ -212,7 +216,7 @@ public class EmployeeController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<EmployeeDto > employeeDtos = employeeModel.getAllEmployee();
+        ArrayList<EmployeeDto > employeeDtos = employeeBO.getAll();
 
        ObservableList<EmployeeTm> employeeTms = FXCollections.observableArrayList();
 
@@ -230,7 +234,7 @@ public class EmployeeController implements Initializable {
     }
 
     private void loadNextEmployeeId() throws SQLException {
-        String nextEmployeeId = employeeModel.getNextEmployeeId();
+        String nextEmployeeId = employeeBO.getNextId();
         lblEmployeeId.setText(nextEmployeeId);
     }
 

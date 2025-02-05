@@ -2,14 +2,15 @@ package lk.ijse.gdse.main.cicvetcare.dao.custom.impl;
 
 
 import lk.ijse.gdse.main.cicvetcare.dao.SQLUtil;
-import lk.ijse.gdse.main.cicvetcare.dto.SupplierDto;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.SupplierDAO;
+import lk.ijse.gdse.main.cicvetcare.entity.SupplierEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class SupplierDAOImpl {
-    public boolean saveSupplier(SupplierDto supplierDto) throws SQLException {
+public class SupplierDAOImpl implements SupplierDAO {
+    public boolean save(SupplierEntity supplierDto) throws SQLException {
         return SQLUtil.execute("INSERT INTO Supplier VALUES(?,?,?,?)",
             supplierDto.getSupplierId(),
             supplierDto.getSupplierName(),
@@ -20,7 +21,7 @@ public class SupplierDAOImpl {
 
     }
 
-    public boolean updateSupplier(SupplierDto supplierDto) throws SQLException {
+    public boolean update(SupplierEntity supplierDto) throws SQLException {
         return SQLUtil.execute("UPDATE Supplier SET name=?, contact_info = ?, address = ? WHERE supplier_id = ?",
                 supplierDto.getSupplierName(),
                 supplierDto.getSupplierContact(),
@@ -30,16 +31,16 @@ public class SupplierDAOImpl {
         );
     }
 
-    public boolean deleteSupplier(String supplierId) throws SQLException {
+    public boolean delete(String supplierId) throws SQLException {
         return SQLUtil.execute("DELETE FROM Supplier WHERE supplier_id = ?",supplierId);
     }
 
-    public ArrayList<SupplierDto> getAllSuppliers() throws SQLException {
+    public ArrayList<SupplierEntity> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM Supplier");
-        ArrayList<SupplierDto> supplierDtos = new ArrayList<>();
+        ArrayList<SupplierEntity> supplierDtos = new ArrayList<>();
 
         while (rst.next()) {
-            SupplierDto supplierDto = new SupplierDto(
+            SupplierEntity supplierDto = new SupplierEntity(
                     rst.getString(1),
                     rst.getString(2),
                     rst.getString(3),
@@ -50,7 +51,7 @@ public class SupplierDAOImpl {
         return supplierDtos;
     }
 
-    public String getNextSupplierId() throws SQLException {
+    public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT supplier_id FROM Supplier ORDER BY supplier_id DESC LIMIT 1");
 
         if (rst.next()) {

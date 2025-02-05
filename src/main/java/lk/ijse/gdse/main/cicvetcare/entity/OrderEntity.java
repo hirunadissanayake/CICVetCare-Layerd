@@ -4,7 +4,6 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,6 +15,15 @@ public class OrderEntity {
     private String order_status;
     private String customer_id;
     private  String employee_id;
+    private OrderItemEntity order_item;
 
-    private ArrayList<OrderItemEntity> orderItemDtos;
+    public OrderEntity(String orderId, LocalDate order_date, String order_status, String customer_id, String employee_id) {
+        this.orderId = orderId;
+        this.order_date = order_date;
+        this.order_status = order_status;
+        this.customer_id = customer_id;
+        this.employee_id = employee_id;
+
+    }
+
 }

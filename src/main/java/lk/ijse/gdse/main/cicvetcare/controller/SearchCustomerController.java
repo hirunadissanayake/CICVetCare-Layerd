@@ -7,8 +7,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.CustomerBO;
+import lk.ijse.gdse.main.cicvetcare.dao.DAOFactory;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.CustomerDAO;
 import lk.ijse.gdse.main.cicvetcare.dto.CustomerDto;
 import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.CustomerDAOImpl;
+import lk.ijse.gdse.main.cicvetcare.entity.CustomerEntity;
 
 public class SearchCustomerController {
 
@@ -33,12 +38,12 @@ public class SearchCustomerController {
     @FXML
     private Button btnSearch;
 
-    CustomerDAOImpl customerModel=new CustomerDAOImpl();
+    CustomerBO customerBo =(CustomerBO) BOFactory.getInstance().getBO(BOFactory.BoType.CUSTOMER);
     @FXML
     void BtnSearchClickOnAction(ActionEvent event) {
         String contact = TxtSearchContactInfo.getText();
         if (!contact.isEmpty()) {
-            CustomerDto customerDto= customerModel.SearchCustomerByContact(contact);
+            CustomerEntity customerDto= customerBo.SearchCustomerByContact(contact);
             TxtCustId.setText(contact);
             if (customerDto != null){
                 TxtCustId.setText(customerDto.getCustId());

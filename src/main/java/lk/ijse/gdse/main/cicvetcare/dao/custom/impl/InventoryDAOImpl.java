@@ -1,23 +1,29 @@
 package lk.ijse.gdse.main.cicvetcare.dao.custom.impl;
 
 import lk.ijse.gdse.main.cicvetcare.dao.SQLUtil;
-import lk.ijse.gdse.main.cicvetcare.dto.InventoryDto;
-import lk.ijse.gdse.main.cicvetcare.dto.OrderItemDto;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.InventoryDAO;
+import lk.ijse.gdse.main.cicvetcare.entity.InventoryEntity;
+import lk.ijse.gdse.main.cicvetcare.entity.OrderItemEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InventoryDAOImpl {
-    public static boolean reduceQty(OrderItemDto orderDetailsDto) throws SQLException {
-        return SQLUtil.execute("update Inventory set stock_level = stock_level - ? where product_id = ?",
-                orderDetailsDto.getQty(),
-                orderDetailsDto.getProduct_id()
-                );
+public class InventoryDAOImpl implements InventoryDAO {
+    public static boolean reduceQty(OrderItemEntity orderDetailsDto){
+        try {
+            return SQLUtil.execute("update Inventory set stock_level = stock_level - ? where product_id = ?",
+                    orderDetailsDto.getQty(),
+                    orderDetailsDto.getProduct_id()
+            );
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
-    public boolean saveInventory(InventoryDto inventoryDto) throws SQLException {
+    public boolean save(InventoryEntity inventoryDto) throws SQLException {
         return SQLUtil.execute("INSERT INTO Inventory VALUES(?,?,?,?)",
                 inventoryDto.getInventoryId(),
                 inventoryDto.getProductId(),
@@ -26,7 +32,7 @@ public class InventoryDAOImpl {
         );
     }
 
-    public boolean updateInventory(InventoryDto inventoryDto) throws SQLException {
+    public boolean update(InventoryEntity inventoryDto) throws SQLException {
         return SQLUtil.execute("UPDATE Inventory SET product_id = ?, stock_level = ?, location = ? WHERE inventory_id = ?",
                 inventoryDto.getProductId(),
                 inventoryDto.getStock(),
@@ -35,16 +41,16 @@ public class InventoryDAOImpl {
         );
     }
 
-    public boolean deleteInventory(String inventoryId) throws SQLException {
+    public boolean delete(String inventoryId) throws SQLException {
         return SQLUtil.execute("DELETE FROM Inventory WHERE inventory_id = ?", inventoryId);
     }
 
-    public ArrayList<InventoryDto> getAllInventory() throws SQLException {
+    public ArrayList<InventoryEntity> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM Inventory");
-        ArrayList<InventoryDto> inventoryDtos = new ArrayList<>();
+        ArrayList<InventoryEntity> inventoryDtos = new ArrayList<>();
 
         while (rst.next()) {
-            InventoryDto inventoryDto = new InventoryDto(
+            InventoryEntity inventoryDto = new InventoryEntity(
                     rst.getString(1),
                     rst.getString(2),
                     rst.getInt(3),
@@ -55,7 +61,7 @@ public class InventoryDAOImpl {
         return inventoryDtos;
     }
 
-    public String getNextInventoryId() throws SQLException {
+    public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT inventory_id FROM Inventory ORDER BY inventory_id DESC LIMIT 1");
 
         if (rst.next()) {
@@ -75,13 +81,13 @@ public class InventoryDAOImpl {
         return "I0001";
     }
 
-    public List<InventoryDto> getLowStockProducts() throws SQLException {
+    public List<InventoryEntity> getLowStockProducts() throws SQLException {
         String query = "SELECT product_id, inventory_id, stock_level, location FROM Inventory WHERE stock_level < 10";
         ResultSet rst = SQLUtil.execute(query);
 
-        ArrayList<InventoryDto> lowStockProducts = new ArrayList<>();
+        ArrayList<InventoryEntity> lowStockProducts = new ArrayList<>();
         while (rst.next()) {
-            InventoryDto inventoryDto = new InventoryDto(
+            InventoryEntity inventoryDto = new InventoryEntity(
                     rst.getString(1),
                     rst.getString(2),
                     rst.getInt(3),

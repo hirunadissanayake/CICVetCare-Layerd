@@ -9,6 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.VehicleBO;
+import lk.ijse.gdse.main.cicvetcare.dao.DAOFactory;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.VehicleDAO;
 import lk.ijse.gdse.main.cicvetcare.dto.VehicleDto;
 import lk.ijse.gdse.main.cicvetcare.tm.VehicleTm;
 import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.VehicleDAOImpl;
@@ -64,7 +68,7 @@ public class VehicleController implements Initializable {
     private TextField txtType;
 
     @FXML
-    private final VehicleDAOImpl vehicleModel = new VehicleDAOImpl();
+    VehicleBO vehicleBO = (VehicleBO) BOFactory.getInstance().getBO(BOFactory.BoType.VEHICLE);
 
     @FXML
     void btnAddOnAction(ActionEvent event) throws SQLException {
@@ -100,7 +104,7 @@ public class VehicleController implements Initializable {
 
         VehicleDto vehicleDto = new VehicleDto(vehicleId, vehicleType, licensePlate, driverId);
 
-        boolean isSaved = vehicleModel.saveVehicle(vehicleDto);
+        boolean isSaved = vehicleBO.save(vehicleDto);
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Vehicle Added Successfully").show();
@@ -118,7 +122,7 @@ public class VehicleController implements Initializable {
         Optional<ButtonType> optional = alert.showAndWait();
 
         if (optional.isPresent() && optional.get() == ButtonType.YES) {
-            boolean isDeleted = vehicleModel.deleteVehicle(vehicleId);
+            boolean isDeleted = vehicleBO.delete(vehicleId);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Vehicle Deleted Successfully").show();
@@ -146,7 +150,7 @@ public class VehicleController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<VehicleDto> vehicleDtos = vehicleModel.getAllVehicles();
+        ArrayList<VehicleDto> vehicleDtos = vehicleBO.getAll();
 
         ObservableList<VehicleTm> vehicleTms = FXCollections.observableArrayList();
 
@@ -204,7 +208,7 @@ public class VehicleController implements Initializable {
 
         VehicleDto vehicleDto = new VehicleDto(vehicleId, vehicleType, licensePlate, driverId);
 
-        boolean isUpdated = vehicleModel.updateVehicle(vehicleDto);
+        boolean isUpdated = vehicleBO.update(vehicleDto);
         if (isUpdated) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Vehicle Updated Successfully").show();
@@ -230,7 +234,7 @@ public class VehicleController implements Initializable {
 
     }
     private void loadNextVehicleId() throws SQLException {
-        String nextVehicleId = vehicleModel.getNextVehicleId();
+        String nextVehicleId = vehicleBO.getNextId();
         lblVehicleId.setText(nextVehicleId);
     }
 

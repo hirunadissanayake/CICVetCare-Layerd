@@ -60,7 +60,7 @@ public class LogInController {
             new Alert(Alert.AlertType.WARNING, "Invalid email format!").show();
             return;
         }
-        boolean isAvailable = UserDAOImpl.searchUser(email, password);
+        boolean isAvailable = UserDAOImpl.search(email, password);
         if (isAvailable) {
             LogInAnc.getChildren().clear();
             Parent load = FXMLLoader.load(getClass().getResource("/view/Dashboard2.fxml"));

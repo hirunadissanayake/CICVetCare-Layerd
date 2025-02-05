@@ -1,16 +1,26 @@
 package lk.ijse.gdse.main.cicvetcare.dao.custom.impl;
 
 import lk.ijse.gdse.main.cicvetcare.dao.SQLUtil;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.OrdersDAO;
 import lk.ijse.gdse.main.cicvetcare.db.DBConnection;
 import lk.ijse.gdse.main.cicvetcare.dto.OrderDto;
+import lk.ijse.gdse.main.cicvetcare.entity.OrderEntity;
+import lk.ijse.gdse.main.cicvetcare.entity.OrderItemEntity;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class OrdersDAOImpl {
-    private final OrderItemDAOImpl orderItemModel= new OrderItemDAOImpl();
-    public String getNextOrderId() throws SQLException {
+public class OrdersDAOImpl implements OrdersDAO {
+    private final OrderItemDAOImpl orderItemDAO= new OrderItemDAOImpl();
+
+    @Override
+    public boolean save(OrderEntity dto) throws SQLException {
+        return false;
+    }
+
+    public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("select order_id from Orders order by order_id desc limit 1");
 
         if (rst.next()){
@@ -23,7 +33,25 @@ public class OrdersDAOImpl {
         return "OD0001";
     }
 
-    public boolean saveOrder(OrderDto orderDto) throws SQLException {
+    @Override
+    public ArrayList<OrderEntity> getAll() throws SQLException {
+        return null;
+    }
+
+    @Override
+    public boolean update(OrderEntity dto) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException {
+        return false;
+    }
+
+
+    public boolean saveOrder(OrderEntity orderDto, OrderDto orderDtos) throws SQLException {
+        System.out.println(orderDto);
+        System.out.println(orderDtos);
         Connection connection = DBConnection.getInstance().getConnection();
         try {
             // @autoCommit: Disables auto-commit to manually control the transaction
@@ -40,7 +68,8 @@ public class OrdersDAOImpl {
             // If the order is saved successfully
             if (isOrderSaved) {
                 // @isOrderDetailListSaved: Saves the list of order details
-                boolean isOrderDetailListSaved = orderItemModel.saveOrderDetailsList(orderDto.getOrderItemDtos());
+                boolean isOrderDetailListSaved = orderItemDAO.saveOrderDetailsList(orderDto.getOrder_item());
+                System.out.println(orderDto);
                 if (isOrderDetailListSaved) {
                     // @commit: Commits the transaction if both order and details are saved successfully
                     connection.commit(); // 2
@@ -59,5 +88,12 @@ public class OrdersDAOImpl {
             // @finally: Resets auto-commit to true after the operation
             connection.setAutoCommit(true); // 4
         }
+    }
+
+    @Override
+    public boolean saveOrder(OrderItemEntity orderDto, OrderEntity orderDtos) throws SQLException {
+        System.out.println(orderDto);
+        System.out.println(orderDtos);
+        return false;
     }
 }

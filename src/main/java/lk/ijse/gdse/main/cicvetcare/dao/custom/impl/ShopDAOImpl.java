@@ -1,15 +1,16 @@
 package lk.ijse.gdse.main.cicvetcare.dao.custom.impl;
 
 import lk.ijse.gdse.main.cicvetcare.dao.SQLUtil;
-import lk.ijse.gdse.main.cicvetcare.dto.ShopDto;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.ShopDAO;
+import lk.ijse.gdse.main.cicvetcare.entity.ShopEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ShopDAOImpl {
+public class ShopDAOImpl implements ShopDAO {
 
-    public boolean saveShop(ShopDto shopDto) throws SQLException {
+    public boolean save(ShopEntity shopDto) throws SQLException {
         return SQLUtil.execute("INSERT INTO Shop VALUES(?, ?, ?, ?, ?)",
                 shopDto.getShopId(),
                 shopDto.getShopName(),
@@ -19,7 +20,7 @@ public class ShopDAOImpl {
         );
     }
 
-    public boolean updateShop(ShopDto shopDto) throws SQLException {
+    public boolean update(ShopEntity shopDto) throws SQLException {
         return SQLUtil.execute("UPDATE Shop SET name=?, contact_info=?, location=?, customer_id=? WHERE shop_id=?",
                 shopDto.getShopName(),
                 shopDto.getContactNo(),
@@ -29,16 +30,16 @@ public class ShopDAOImpl {
         );
     }
 
-    public boolean deleteShop(String shopId) throws SQLException {
+    public boolean delete(String shopId) throws SQLException {
         return SQLUtil.execute("DELETE FROM Shop WHERE shop_id=?", shopId);
     }
 
-    public ArrayList<ShopDto> getAllShops() throws SQLException {
+    public ArrayList<ShopEntity> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM Shop");
-        ArrayList<ShopDto> shopDtos = new ArrayList<>();
+        ArrayList<ShopEntity> shopDtos = new ArrayList<>();
 
         while (rst.next()) {
-            ShopDto shopDto = new ShopDto(
+            ShopEntity shopDto = new ShopEntity(
                     rst.getString("shop_id"),
                     rst.getString("name"),
                     rst.getString("contact_info"),
@@ -50,7 +51,7 @@ public class ShopDAOImpl {
         return shopDtos;
     }
 
-    public String getNextShopId() throws SQLException {
+    public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT shop_id FROM Shop ORDER BY shop_id DESC LIMIT 1");
 
         if (rst.next()) {

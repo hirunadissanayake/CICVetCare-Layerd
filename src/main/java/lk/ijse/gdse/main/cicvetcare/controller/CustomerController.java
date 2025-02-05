@@ -15,9 +15,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.CustomerBO;
 import lk.ijse.gdse.main.cicvetcare.dto.CustomerDto;
 import lk.ijse.gdse.main.cicvetcare.tm.CustomerTm;
-import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.CustomerDAOImpl;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -79,7 +81,8 @@ public class CustomerController implements Initializable {
     private TextField txtType;
 
 
-    CustomerDAOImpl customerModel = new CustomerDAOImpl();
+    CustomerBO customerBo =(CustomerBO) BOFactory.getInstance().getBO(BOFactory.BoType.CUSTOMER);
+
     public void AddBtnOnClickAction(ActionEvent actionEvent) throws SQLException {
         String custId = lblCustomerId.getText();
         String custName = txtName.getText();
@@ -107,7 +110,7 @@ public class CustomerController implements Initializable {
         if (isValidName && isValidContactInfo){
             CustomerDto customerDto = new CustomerDto(custId, custName, custType, custContact);
 
-            boolean isSaved  = customerModel.saveCustomer(customerDto);
+            boolean isSaved  = customerBo.save(customerDto);
             if (isSaved){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Customer Added Successfully").show();
@@ -124,7 +127,7 @@ public class CustomerController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
-            boolean isDeleted = customerModel.deleteCustomer(customerId);
+            boolean isDeleted = customerBo.delete(customerId);
             if (isDeleted){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Customer Deleted Successfully").show();
@@ -161,7 +164,7 @@ public class CustomerController implements Initializable {
         if (isValidName && isValidContactInfo){
             CustomerDto customerDto = new CustomerDto(custId, custName, custType, custContact);
 
-            boolean isUpated  = customerModel.updateCustomer(customerDto);
+            boolean isUpated  = customerBo.update(customerDto);
             if (isUpated){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Customer Updated Successfully").show();
@@ -214,7 +217,7 @@ public class CustomerController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<CustomerDto> customerDtos = customerModel.getAllCustomer();
+        ArrayList<CustomerDto> customerDtos = customerBo.getAll();
 
         ObservableList<CustomerTm> customerTms = FXCollections.observableArrayList();
 
@@ -231,8 +234,6 @@ public class CustomerController implements Initializable {
     }
 
     private void loadNextCustomerId() throws SQLException {
-        String nextCusId = customerModel.getNextCustomerId();
-        lblCustomerId.setText(nextCusId);
     }
 
     public void btnResetOnAction(ActionEvent actionEvent) throws SQLException {

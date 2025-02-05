@@ -1,14 +1,15 @@
 package lk.ijse.gdse.main.cicvetcare.dao.custom.impl;
 
 import lk.ijse.gdse.main.cicvetcare.dao.SQLUtil;
-import lk.ijse.gdse.main.cicvetcare.dto.EmployeeDto;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.EmployeeDAO;
+import lk.ijse.gdse.main.cicvetcare.entity.EmployeeEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class EmployeeDAOImpl {
-    public boolean saveEmployee(EmployeeDto employeeDto) throws SQLException {
+public class EmployeeDAOImpl implements EmployeeDAO {
+    public boolean save(EmployeeEntity employeeDto) throws SQLException {
         return SQLUtil.execute("INSERT INTO Employee VALUES(?,?,?,?)",
                 employeeDto.getEmployeeId(),
                 employeeDto.getEmployeeName(),
@@ -18,11 +19,11 @@ public class EmployeeDAOImpl {
         );
     }
 
-    public boolean deleteEmployee(String employeeId) throws SQLException {
+    public boolean delete(String employeeId) throws SQLException {
         return SQLUtil.execute("DELETE FROM Employee WHERE employee_id = ?",employeeId);
     }
 
-    public String getNextEmployeeId() throws SQLException {
+    public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT employee_id FROM Employee ORDER BY employee_id DESC LIMIT 1");
 
         if (rst.next()) {
@@ -44,12 +45,12 @@ public class EmployeeDAOImpl {
         return "E0001";
     }
 
-    public ArrayList<EmployeeDto> getAllEmployee() throws SQLException {
+    public ArrayList<EmployeeEntity> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM Employee");
-        ArrayList<EmployeeDto> employeeDtos = new ArrayList<>();
+        ArrayList<EmployeeEntity> employeeDtos = new ArrayList<>();
 
         while (rst.next()) {
-            EmployeeDto employeeDto = new EmployeeDto(
+            EmployeeEntity employeeDto = new EmployeeEntity(
                     rst.getString("employee_id"),
                     rst.getString("name"),
                     rst.getString("position"),
@@ -61,7 +62,7 @@ public class EmployeeDAOImpl {
         return employeeDtos;
     }
 
-    public boolean updateEmployee(EmployeeDto employeeDto) throws SQLException {
+    public boolean update(EmployeeEntity employeeDto) throws SQLException {
         return SQLUtil.execute("UPDATE Employee SET name=?, position=?, contact_info=? WHERE employee_id=?",
 
                 employeeDto.getEmployeeName(),

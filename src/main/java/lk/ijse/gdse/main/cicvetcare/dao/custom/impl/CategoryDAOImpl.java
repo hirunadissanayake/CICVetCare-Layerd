@@ -1,14 +1,15 @@
 package lk.ijse.gdse.main.cicvetcare.dao.custom.impl;
 
 import lk.ijse.gdse.main.cicvetcare.dao.SQLUtil;
-import lk.ijse.gdse.main.cicvetcare.dto.CategoryDto;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.CategoryDAO;
+import lk.ijse.gdse.main.cicvetcare.entity.CategoryEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CategoryDAOImpl {
-    public String getNextCategoryId() throws SQLException {
+public class CategoryDAOImpl implements CategoryDAO {
+    public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("select category_id from Category order by category_id desc limit 1");
 
         if (rst.next()){
@@ -22,12 +23,12 @@ public class CategoryDAOImpl {
         return "CAT001";
     }
 
-    public ArrayList<CategoryDto> getAllCategories() throws SQLException {
-        ArrayList<CategoryDto> categoryDtos = new ArrayList<>();
+    public ArrayList<CategoryEntity> getAll() throws SQLException {
+        ArrayList<CategoryEntity> categoryDtos = new ArrayList<>();
         ResultSet rst = SQLUtil.execute("select * from Category");
 
         while (rst.next()){
-            CategoryDto categoryDto = new CategoryDto(
+            CategoryEntity categoryDto = new CategoryEntity(
                     rst.getString(1),
                     rst.getString(2)
             );
@@ -36,21 +37,21 @@ public class CategoryDAOImpl {
         return categoryDtos;
     }
 
-    public boolean saveCategory(CategoryDto categoryDto) throws SQLException {
+    public boolean save(CategoryEntity categoryDto) throws SQLException {
         return SQLUtil.execute("insert into Category values(?,?)",
                 categoryDto.getCategoryId(),
                 categoryDto.getCategoryName()
         );
     }
 
-    public boolean updateCategory(CategoryDto categoryDto) throws SQLException {
+    public boolean update(CategoryEntity categoryDto) throws SQLException {
         return SQLUtil.execute("update Category set name = ? where category_id = ?",
                 categoryDto.getCategoryName(),
                 categoryDto.getCategoryId()
                 );
     }
 
-    public boolean deleteCategory(String catId) throws SQLException {
+    public boolean delete(String catId) throws SQLException {
         return SQLUtil.execute("delete from Category where category_id = ?",catId);
     }
 }

@@ -41,7 +41,7 @@ public class ResetPasswordController {
                 .filter(user -> user.getEmail().equals(selectedEmail))
                 .findFirst();*/
         String password = txtPassword.getText();
-        boolean isUpdate = UserDAOImpl.updateUser(selectedEmail, password);
+        boolean isUpdate = UserDAOImpl.update(selectedEmail, password);
         if (isUpdate) {
             new Alert(Alert.AlertType.INFORMATION, "Password updated successfully").show();
             Parent load = FXMLLoader.load(getClass().getResource("/view/LogIn.fxml"));

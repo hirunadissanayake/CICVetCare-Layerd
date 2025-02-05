@@ -1,14 +1,17 @@
 package lk.ijse.gdse.main.cicvetcare.dao.custom.impl;
 
+import lk.ijse.gdse.main.cicvetcare.dao.custom.UserDAO;
 import lk.ijse.gdse.main.cicvetcare.db.DBConnection;
+import lk.ijse.gdse.main.cicvetcare.dto.UserDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class UserDAOImpl {
-    public static boolean searchUser(String email, String password) {
+public class UserDAOImpl implements UserDAO {
+    public static boolean search(String email, String password) {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             String sql = "select * from User where email = ? and password = ?";
@@ -25,7 +28,7 @@ public class UserDAOImpl {
         return false;
     }
 
-    public static boolean updateUser(String selectedEmail, String password) {
+    public static boolean update(String selectedEmail, String password) {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             String sql = "update User set password = ? where email = ?";
@@ -39,6 +42,31 @@ public class UserDAOImpl {
         }catch (SQLException e){
             System.out.println("Password Updated Failed");
         }
+        return false;
+    }
+
+    @Override
+    public boolean save(UserDto dto) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public String getNextId() throws SQLException {
+        return "";
+    }
+
+    @Override
+    public ArrayList<UserDto> getAll() throws SQLException {
+        return null;
+    }
+
+    @Override
+    public boolean update(UserDto dto) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException {
         return false;
     }
 }

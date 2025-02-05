@@ -9,6 +9,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.CustomerBO;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.ShopBO;
+import lk.ijse.gdse.main.cicvetcare.dao.DAOFactory;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.CustomerDAO;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.ShopDAO;
 import lk.ijse.gdse.main.cicvetcare.dto.ShopDto;
 import lk.ijse.gdse.main.cicvetcare.tm.ShopTm;
 import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.CustomerDAOImpl;
@@ -74,8 +80,8 @@ public class ShopController implements Initializable {
     @FXML
     private TextField txtCustomerId;
 
-    private ShopDAOImpl shopModel = new ShopDAOImpl();
-
+     ShopBO shopBO = (ShopBO) BOFactory.getInstance().getBO(BOFactory.BoType.SHOP);
+    CustomerBO customerBo =(CustomerBO) BOFactory.getInstance().getBO(BOFactory.BoType.CUSTOMER);
     @FXML
     void btnAddOnAction(ActionEvent event) throws SQLException {
         String shopId = lblShopId.getText();
@@ -115,7 +121,7 @@ public class ShopController implements Initializable {
 
         ShopDto shopDto = new ShopDto(shopId, name, contactInfo, location, customerId);
 
-        boolean isSaved = shopModel.saveShop(shopDto);
+        boolean isSaved = shopBO.save(shopDto);
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Shop Added Successfully").show();
@@ -168,7 +174,7 @@ public class ShopController implements Initializable {
 
         ShopDto shopDto = new ShopDto(shopId, name, contactInfo, location, customerId);
 
-        boolean isUpdated = shopModel.updateShop(shopDto);
+        boolean isUpdated = shopBO.update(shopDto);
         if (isUpdated) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Shop Updated Successfully").show();
@@ -209,14 +215,14 @@ public class ShopController implements Initializable {
     }
 
     private void loadCustomerIds() throws SQLException {
-        ArrayList<String> customerIds = customerModel.getAllCustomerIds();
+        ArrayList<String> customerIds = customerBo.getAllCustomerIds();
         ObservableList<String> customerIdObservableList = FXCollections.observableArrayList();
         customerIdObservableList.addAll(customerIds);
         cmbCustId.setItems(customerIdObservableList);
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<ShopDto> shopDtos = shopModel.getAllShops();
+        ArrayList<ShopDto> shopDtos = shopBO.getAll();
 
         ObservableList<ShopTm> shopTms = FXCollections.observableArrayList();
 
@@ -234,7 +240,7 @@ public class ShopController implements Initializable {
     }
 
     private void loadNextShopId() throws SQLException {
-        String nextShopId = shopModel.getNextShopId();
+        String nextShopId = shopBO.getNextId();
         lblShopId.setText(nextShopId);
     }
     @FXML
@@ -266,7 +272,7 @@ public class ShopController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-            boolean isDeleted = shopModel.deleteShop(shopId);
+            boolean isDeleted = shopBO.delete(shopId);
             if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Shop Deleted Successfully").show();
@@ -276,7 +282,7 @@ public class ShopController implements Initializable {
         }
     }
 
-    CustomerDAOImpl customerModel = new CustomerDAOImpl();
+
     public void cmbBoxCustIdOnClickAction(ActionEvent actionEvent) {
 
     }

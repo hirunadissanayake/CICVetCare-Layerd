@@ -1,14 +1,15 @@
 package lk.ijse.gdse.main.cicvetcare.dao.custom.impl;
 
 import lk.ijse.gdse.main.cicvetcare.dao.SQLUtil;
-import lk.ijse.gdse.main.cicvetcare.dto.DeliveryDto;
+import lk.ijse.gdse.main.cicvetcare.dao.custom.DeliveryDAO;
+import lk.ijse.gdse.main.cicvetcare.entity.DeliveryEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DeliveryDAOImpl {
-    public boolean saveDelivery(DeliveryDto deliveryDto) throws SQLException {
+public class DeliveryDAOImpl implements DeliveryDAO {
+    public boolean save(DeliveryEntity deliveryDto) throws SQLException {
         return SQLUtil.execute("INSERT INTO Delivery VALUES (?, ?, ?, ?, ?, ?, ?)",
                 deliveryDto.getDeliveryId(),
                 deliveryDto.getDeliveryDate(),
@@ -20,12 +21,12 @@ public class DeliveryDAOImpl {
         );
     }
 
-    public boolean deleteDelivery(String deliveryId) throws SQLException {
+    public boolean delete(String deliveryId) throws SQLException {
         return SQLUtil.execute("DELETE FROM Delivery WHERE delivery_id = ?", deliveryId);
 
     }
 
-    public boolean updateDelivery(DeliveryDto deliveryDto) throws SQLException {
+    public boolean update(DeliveryEntity deliveryDto) throws SQLException {
         return SQLUtil.execute("UPDATE Delivery SET delivery_date = ?, delivery_status = ?, order_id = ?, vehicle_id = ?, driver_id = ?, shop_id = ? WHERE delivery_id = ?",
                 deliveryDto.getDeliveryDate(),
                 deliveryDto.getDeliveryStatus(),
@@ -37,12 +38,12 @@ public class DeliveryDAOImpl {
         );
     }
 
-    public ArrayList<DeliveryDto> getAllDeliveries() throws SQLException {
+    public ArrayList<DeliveryEntity> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM Delivery");
-        ArrayList<DeliveryDto> deliveries = new ArrayList<>();
+        ArrayList<DeliveryEntity> deliveries = new ArrayList<>();
 
         while (rst.next()) {
-            deliveries.add(new DeliveryDto(
+            deliveries.add(new DeliveryEntity(
                     rst.getString("delivery_id"),
                     rst.getDate("delivery_date").toLocalDate(),
                     rst.getString("delivery_status"),
@@ -56,7 +57,7 @@ public class DeliveryDAOImpl {
         return deliveries;
     }
 
-    public String getNextDeliveryId() throws SQLException {
+    public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT delivery_id FROM Delivery ORDER BY delivery_id DESC LIMIT 1");
 
         if (rst.next()) {
@@ -67,4 +68,7 @@ public class DeliveryDAOImpl {
 
         return "DEL0001";
     }
+
+
+
 }

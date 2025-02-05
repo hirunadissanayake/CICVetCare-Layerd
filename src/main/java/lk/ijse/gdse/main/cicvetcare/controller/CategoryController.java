@@ -9,9 +9,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
+import lk.ijse.gdse.main.cicvetcare.bo.custom.CategoryBO;
 import lk.ijse.gdse.main.cicvetcare.dto.CategoryDto;
 import lk.ijse.gdse.main.cicvetcare.tm.CategoryTm;
-import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.CategoryDAOImpl;
+
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -66,7 +68,7 @@ public class CategoryController implements Initializable {
         }
         if (isValidName){
             CategoryDto categoryDto = new CategoryDto(catId,catName);
-            boolean isSaved = categoryModel.saveCategory(categoryDto);
+            boolean isSaved = categoryBO.save(categoryDto);
             if (isSaved){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Category added successfully").show();
@@ -84,7 +86,7 @@ public class CategoryController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.get() == ButtonType.YES && optionalButtonType.isPresent()){
-            boolean isDeleted = categoryModel.deleteCategory(catId);
+            boolean isDeleted = categoryBO.delete(catId);
             if (isDeleted){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Category deleted successfully").show();
@@ -114,7 +116,7 @@ public class CategoryController implements Initializable {
         }
         if (isValidName){
             CategoryDto categoryDto = new CategoryDto(catId,catName);
-            boolean isUpdated = categoryModel.updateCategory(categoryDto);
+            boolean isUpdated = categoryBO.update(categoryDto);
             if (isUpdated){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Category updated successfully").show();
@@ -162,7 +164,7 @@ public class CategoryController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<CategoryDto> categoryDtos = categoryModel.getAllCategories();
+        ArrayList<CategoryDto> categoryDtos = categoryBO.getAll();
         ObservableList<CategoryTm> categoryTms = FXCollections.observableArrayList();
 
         for (CategoryDto categoryDto : categoryDtos) {
@@ -175,9 +177,10 @@ public class CategoryController implements Initializable {
         tblCategory.setItems(categoryTms);
     }
 
-    CategoryDAOImpl categoryModel = new CategoryDAOImpl();
+    CategoryBO categoryBO = (CategoryBO) BOFactory.getInstance().getBO(BOFactory.BoType.CATEGORY);
+
     private void loadNextCategoryId() throws SQLException {
-        String categoryId = categoryModel.getNextCategoryId();
+        String categoryId = categoryBO.getNextId();
         lblCatId.setText(categoryId);
     }
 }
