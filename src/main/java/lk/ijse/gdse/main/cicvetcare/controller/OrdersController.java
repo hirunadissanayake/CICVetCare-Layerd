@@ -14,19 +14,10 @@ import lk.ijse.gdse.main.cicvetcare.bo.BOFactory;
 import lk.ijse.gdse.main.cicvetcare.bo.custom.CustomerBO;
 import lk.ijse.gdse.main.cicvetcare.bo.custom.OrdersBO;
 import lk.ijse.gdse.main.cicvetcare.bo.custom.ProductBO;
-import lk.ijse.gdse.main.cicvetcare.dao.DAOFactory;
-import lk.ijse.gdse.main.cicvetcare.dao.custom.CustomerDAO;
-import lk.ijse.gdse.main.cicvetcare.dao.custom.OrdersDAO;
-import lk.ijse.gdse.main.cicvetcare.dao.custom.ProductDAO;
 import lk.ijse.gdse.main.cicvetcare.db.DBConnection;
 import lk.ijse.gdse.main.cicvetcare.dto.*;
 import lk.ijse.gdse.main.cicvetcare.entity.CustomerEntity;
-import lk.ijse.gdse.main.cicvetcare.entity.InventoryEntity;
-import lk.ijse.gdse.main.cicvetcare.entity.ProductEntity;
 import lk.ijse.gdse.main.cicvetcare.tm.OrderTm;
-import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.CustomerDAOImpl;
-import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.OrdersDAOImpl;
-import lk.ijse.gdse.main.cicvetcare.dao.custom.impl.ProductDAOImpl;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -211,8 +202,7 @@ public class OrdersController implements Initializable {
         double unitPrice = Double.parseDouble(lblPrice.getText());
         OrderItemDto orderItemDto = new OrderItemDto(orderId, selectedProductId, cart, unitPrice);
 
-        System.out.println("test2"+orderDto.getOrderId());
-        boolean isSaved = ordersBO.save(orderDto,orderItemDto);
+        boolean isSaved = ordersBO.saveOrder(orderDto,orderItemDto);
         if (isSaved) {
             new Alert(Alert.AlertType.INFORMATION, "Order Placed", ButtonType.OK).show();
             refreshPage();

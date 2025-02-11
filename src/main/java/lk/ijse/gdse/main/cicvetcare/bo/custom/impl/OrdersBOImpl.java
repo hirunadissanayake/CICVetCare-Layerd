@@ -23,11 +23,7 @@ public class OrdersBOImpl implements OrdersBO {
 
 
 
-    @Override
-    public boolean save(OrderDto dto, OrderItemDto orderItemDto) throws SQLException {
-        System.out.println("test3"+dto.getOrderId());
-        System.out.println(dto);
-        System.out.println(orderItemDto);
+    public boolean saveOrder(OrderDto dto, OrderItemDto orderItemDto) throws SQLException {
         return ordersDAO.saveOrder(
                 new OrderItemEntity(orderItemDto.getOrder_id(),orderItemDto.getProduct_id(),orderItemDto.getQty(),orderItemDto.getPrice()).getOrder().getOrder_item(),
                 new OrderEntity(dto.getOrderId(),dto.getOrder_date(),dto.getOrder_status(),dto.getCustomer_id(),dto.getEmployee_id()));

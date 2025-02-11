@@ -234,6 +234,8 @@ public class CustomerController implements Initializable {
     }
 
     private void loadNextCustomerId() throws SQLException {
+        String nextCusId = customerBo.getNextId();
+        lblCustomerId.setText(nextCusId);
     }
 
     public void btnResetOnAction(ActionEvent actionEvent) throws SQLException {

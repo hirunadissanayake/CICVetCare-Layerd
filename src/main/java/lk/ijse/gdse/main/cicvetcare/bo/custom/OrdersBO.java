@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 
 public interface OrdersBO extends SuperBO {
-    boolean save(OrderDto dto, OrderItemDto orderItemDto) throws SQLException;
+    boolean saveOrder(OrderDto dto, OrderItemDto orderItemDto) throws SQLException;
     String getNextId() throws SQLException;;
 
 

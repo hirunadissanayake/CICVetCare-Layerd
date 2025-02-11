@@ -49,9 +49,7 @@ public class OrdersDAOImpl implements OrdersDAO {
     }
 
 
-    public boolean saveOrder(OrderEntity orderDto, OrderDto orderDtos) throws SQLException {
-        System.out.println(orderDto);
-        System.out.println(orderDtos);
+    public boolean saveOrder(OrderEntity orderDto, OrderEntity orderDtos) throws SQLException {
         Connection connection = DBConnection.getInstance().getConnection();
         try {
             // @autoCommit: Disables auto-commit to manually control the transaction
@@ -90,10 +88,10 @@ public class OrdersDAOImpl implements OrdersDAO {
         }
     }
 
+
     @Override
     public boolean saveOrder(OrderItemEntity orderDto, OrderEntity orderDtos) throws SQLException {
-        System.out.println(orderDto);
-        System.out.println(orderDtos);
         return false;
     }
 }
+

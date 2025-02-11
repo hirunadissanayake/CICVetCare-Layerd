@@ -10,9 +10,9 @@ import java.sql.SQLException;
 
 
 public interface OrdersDAO extends CrudDAO<OrderEntity> {
-     /*String getNextOrderId();
-     boolean saveOrder(OrderDto orderDto);*/
+//     String getNextOrderId();
+//     boolean saveOrder(OrderDto orderDto);
      boolean saveOrder(OrderItemEntity orderDto, OrderEntity orderDtos) throws SQLException;
 
-//    boolean saveOrder(OrderEntity order);
+
 }
